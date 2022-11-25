@@ -10,3 +10,4 @@ class MainApp:
 if __name__ == '__main__':
     mainApp = MainApp()
     print(mainApp)
+    print("This is gonna be awesome!")
