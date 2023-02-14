@@ -1,4 +1,5 @@
-###################################3
+###################################
+
 """
 File containing enums used to ease access to faces, colors, cubies.
 """
