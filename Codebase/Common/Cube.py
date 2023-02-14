@@ -1,6 +1,6 @@
 import math
 from itertools import product
-from Turns import TURN_DICT, X, Y, Z, ORIENTATION, TARGET_AXIS, CW
+from Turns import TURN_DICT, X, Y, Z, ORIENTATION, TARGET_AXIS, CW, TARGET_REORIENTATION
 
 
 class Cube:
@@ -52,11 +52,14 @@ class Cube:
         self.cube_dict = self.process_string_list(cube_list=faces_strings)
 
     def process_string_list(self, cube_list: list):
-        # Check if the centers of the cube are mapped correctly
-        # Each face is a list of each 9-characters, then the center is at the 5th char, so index 4 
-        cube_centers = list(face[4] for face in cube_list)
-        if len(set(cube_centers)) != 6:
-            raise Exception(f"Centers of the cube are not mapped correctly: {cube_centers}")
+        if cube_list == 0:
+            cube_list = ["wwwwwwwww", "ooooooooo", "ggggggggg", "rrrrrrrrr", "bbbbbbbbb", "yyyyyyyyy"]
+        else:
+            # Check if the centers of the cube are mapped correctly
+            # Each face is a list of each 9-characters, then the center is at the 5th char, so index 4
+            cube_centers = list(face[4] for face in cube_list)
+            if len(set(cube_centers)) != 6:
+                raise Exception(f"Centers of the cube are not mapped correctly: {cube_centers}")
 
         # Prepare coordinates to give them colors        
         c = range(-1, 2)
@@ -70,7 +73,6 @@ class Cube:
             n = 3
             chunks = [face_str[i:i + n] for i in range(0, len(face_str), n)]
             cube_split_by_rows.append(chunks)
-
         # Assign colors at each coordinate and depending on orientations
         # Orientation matters a lot. We ignore the orientations 0 (there is nothing to assign there)
         # Axis are the following (chosen using the right hand rule):
@@ -94,27 +96,23 @@ class Cube:
 
         # Reverse search: we find the colors using the coordinates mapping them to the colors matrix
         for cubie in cube_dict:
-            # Each orientation is either -1 or 1
-            for orientation in range(0, 2):
-                #
-                pass
-            if cubie[0] == 1:
-                i, j, k = 3, abs(cubie[1] - 1), abs(cubie[2] - 1)
+            if cubie[X] == 1:
+                i, j, k = 3, abs(cubie[Y] - 1), abs(cubie[Z] - 1)
                 cube_dict[cubie][0] = cube_split_by_rows[i][j][k]
-            if cubie[0] == -1:
-                i, j, k = 1, abs(cubie[1] - 1), cubie[2] + 1
+            if cubie[X] == -1:
+                i, j, k = 1, abs(cubie[Y] - 1), cubie[Z] + 1
                 cube_dict[cubie][0] = cube_split_by_rows[i][j][k]
-            if cubie[1] == 1:
-                i, j, k = 0, cubie[2] + 1, cubie[0] + 1
+            if cubie[Y] == 1:
+                i, j, k = 0, cubie[Z] + 1, cubie[X] + 1
                 cube_dict[cubie][1] = cube_split_by_rows[i][j][k]
-            if cubie[1] == -1:
-                i, j, k = 5, abs(cubie[2] - 1), cubie[0] + 1
+            if cubie[Y] == -1:
+                i, j, k = 5, abs(cubie[Z] - 1), cubie[X] + 1
                 cube_dict[cubie][1] = cube_split_by_rows[i][j][k]
-            if cubie[2] == 1:
-                i, j, k = 2, abs(cubie[1] - 1), cubie[0] + 1
+            if cubie[Z] == 1:
+                i, j, k = 2, abs(cubie[Y] - 1), cubie[X] + 1
                 cube_dict[cubie][2] = cube_split_by_rows[i][j][k]
-            if cubie[2] == -1:
-                i, j, k = 4, abs(cubie[1] - 1), abs(cubie[0] - 1)
+            if cubie[Z] == -1:
+                i, j, k = 4, abs(cubie[Y] - 1), abs(cubie[X] - 1)
                 cube_dict[cubie][2] = cube_split_by_rows[i][j][k]
 
         return cube_dict
@@ -139,14 +137,16 @@ class Cube:
             if cubie[relevant_axis] == orientation:
 
                 key = [None, None, None]
-                key[perm[X][TARGET_AXIS]] = math.prod(perm[X])*cubie[X]
-                key[perm[Y][TARGET_AXIS]] = math.prod(perm[Y])*cubie[Y]
-                key[perm[Z][TARGET_AXIS]] = math.prod(perm[Z])*cubie[Z]
+                key[perm[X][TARGET_AXIS]] = perm[X][TARGET_REORIENTATION]*cubie[X]
+                key[perm[Y][TARGET_AXIS]] = perm[Y][TARGET_REORIENTATION]*cubie[Y]
+                key[perm[Z][TARGET_AXIS]] = perm[Z][TARGET_REORIENTATION]*cubie[Z]
                 val = [None, None, None]
                 val[perm[X][TARGET_AXIS]] = colors[X]
                 val[perm[Y][TARGET_AXIS]] = colors[Y]
                 val[perm[Z][TARGET_AXIS]] = colors[Z]
                 new_config[tuple(key)] = val
+
+        print(new_config)
         self.cube_dict.update(new_config)
 
 
@@ -157,6 +157,7 @@ class Cube:
 if __name__ == '__main__':
     # For scramble: L' D2 B' L2 U2 B R2 D2 U2 F2 U2 F2 L' R2 D' L R2 F' R
     cubestring = ['rowwwoyry', 'wrbwowgrb', 'rbgbggwgr', 'oboorbyry', 'gybybobwr', 'oygyygwgo']
-    cube = Cube(cubestring)
+    cube = Cube()
+    print(cube.cube_dict)
     cube.turn(CW, "U")
     print(cube.cube_dict)
