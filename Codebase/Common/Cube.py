@@ -1,6 +1,5 @@
-import math
 from itertools import product
-from Turns import TURN_DICT, X, Y, Z, ORIENTATION, TARGET_AXIS, CW, TARGET_REORIENTATION
+from Codebase.Common.Turns import TURN_MAPPING_DICT, X, Y, Z, ORIENTATION, TARGET_AXIS, TARGET_REORIENTATION
 
 
 class Cube:
@@ -51,7 +50,8 @@ class Cube:
         # process the cube_string into the 6 faces
         self.cube_dict = self.process_string_list(cube_list=faces_strings)
 
-    def process_string_list(self, cube_list: list):
+    @staticmethod
+    def process_string_list(cube_list: list):
         if cube_list == 0:
             cube_list = ["wwwwwwwww", "ooooooooo", "ggggggggg", "rrrrrrrrr", "bbbbbbbbb", "yyyyyyyyy"]
         else:
@@ -61,7 +61,7 @@ class Cube:
             if len(set(cube_centers)) != 6:
                 raise Exception(f"Centers of the cube are not mapped correctly: {cube_centers}")
 
-        # Prepare coordinates to give them colors        
+        # Prepare coordinates to give them colors
         c = range(-1, 2)
         cube_dict = {coord: ['', '', ''] for coord in list(product(c, repeat=3))}
         cube_dict.pop((0, 0, 0))
@@ -73,6 +73,7 @@ class Cube:
             n = 3
             chunks = [face_str[i:i + n] for i in range(0, len(face_str), n)]
             cube_split_by_rows.append(chunks)
+
         # Assign colors at each coordinate and depending on orientations
         # Orientation matters a lot. We ignore the orientations 0 (there is nothing to assign there)
         # Axis are the following (chosen using the right hand rule):
@@ -118,16 +119,46 @@ class Cube:
         return cube_dict
 
     def apply_alg(self, alg: str):
-        pass
+        # Format the alg string into the notation used in the TURN_MAPPING_DICT
+        alg = alg.split(' ')
+        # Apply the turns on the cube using the turn method
+        for move in alg:
+            if '2' in move:
+                rot = "dt"
+            elif "'" in move:
+                rot = "ccw"
+            else:
+                rot = "cw"
+            face = move[0]
+            self.turn(rot, face)
+
+    @staticmethod
+    def format_alg_to_turns(alg: str):
+        # Separates each move, taking into
+        result = []
+        i = 0
+        prev = ''
+        for char in alg:
+            if char == ' ':
+                continue
+            if char in ['\'', '2']:
+                result.append(prev + char)
+                prev = ''
+            else:
+                if prev:
+                    result.append(prev)
+                prev = char
+        if prev:
+            result.append(prev)
+        return result
 
     def turn(self, rot_type: str, face: str):
         # new configuration for the pieces that will turn
         new_config = {}
         relevant_axis = ORIENTATION[face][0]
         orientation = ORIENTATION[face][1]
-        perm = TURN_DICT[rot_type][face]
+        perm = TURN_MAPPING_DICT[rot_type][face]
         cube_dict = self.cube_dict.copy().items()
-
 
         if relevant_axis is None:
             raise Exception(f"{face} is not a valid move notation.")
@@ -135,29 +166,22 @@ class Cube:
         for cubie, colors in cube_dict:
             # find the relevant cubies by axis and orientation
             if cubie[relevant_axis] == orientation:
-
                 key = [None, None, None]
-                key[perm[X][TARGET_AXIS]] = perm[X][TARGET_REORIENTATION]*cubie[X]
-                key[perm[Y][TARGET_AXIS]] = perm[Y][TARGET_REORIENTATION]*cubie[Y]
-                key[perm[Z][TARGET_AXIS]] = perm[Z][TARGET_REORIENTATION]*cubie[Z]
+                key[perm[X][TARGET_AXIS]] = perm[X][TARGET_REORIENTATION] * cubie[X]
+                key[perm[Y][TARGET_AXIS]] = perm[Y][TARGET_REORIENTATION] * cubie[Y]
+                key[perm[Z][TARGET_AXIS]] = perm[Z][TARGET_REORIENTATION] * cubie[Z]
                 val = [None, None, None]
                 val[perm[X][TARGET_AXIS]] = colors[X]
                 val[perm[Y][TARGET_AXIS]] = colors[Y]
                 val[perm[Z][TARGET_AXIS]] = colors[Z]
                 new_config[tuple(key)] = val
 
-        print(new_config)
         self.cube_dict.update(new_config)
 
-
-
-
-
-
-if __name__ == '__main__':
-    # For scramble: L' D2 B' L2 U2 B R2 D2 U2 F2 U2 F2 L' R2 D' L R2 F' R
-    cubestring = ['rowwwoyry', 'wrbwowgrb', 'rbgbggwgr', 'oboorbyry', 'gybybobwr', 'oygyygwgo']
-    cube = Cube()
-    print(cube.cube_dict)
-    cube.turn(CW, "U")
-    print(cube.cube_dict)
+# if __name__ == '__main__':
+#     # For scramble: L' D2 B' L2 U2 B R2 D2 U2 F2 U2 F2 L' R2 D' L R2 F' R
+#     cubestring = ['rowwwoyry', 'wrbwowgrb', 'rbgbggwgr', 'oboorbyry', 'gybybobwr', 'oygyygwgo']
+#     cube = Cube()
+#     print(cube.cube_dict)
+#     cube.turn(CW, "R")
+#     print(cube.cube_dict)
