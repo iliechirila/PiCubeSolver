@@ -39,6 +39,8 @@ TURN_MAPPING_DICT = {
 
 CW = "cw"
 CCW = "ccw"
+DT = "dt"
+# To be used as indexes
 TARGET_AXIS = 0
 TARGET_REORIENTATION = 1
 X, Y, Z = 0, 1, 2

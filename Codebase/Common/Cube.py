@@ -1,6 +1,7 @@
 from itertools import product
 from Codebase.Common.Turns import TURN_MAPPING_DICT, X, Y, Z, ORIENTATION, TARGET_AXIS, TARGET_REORIENTATION
 
+import numpy as np
 
 class Cube:
     """
@@ -118,7 +119,7 @@ class Cube:
 
         return cube_dict
 
-    def apply_alg(self, alg: str):
+    def apply_alg_std(self, alg: str):
         # Format the alg string into the notation used in the TURN_MAPPING_DICT
         alg = alg.split(' ')
         # Apply the turns on the cube using the turn method
@@ -130,7 +131,10 @@ class Cube:
             else:
                 rot = "cw"
             face = move[0]
-            self.turn(rot, face)
+            self.turn((rot, face))
+    def apply_alg_tuple(self, alg: list):
+        for move in alg:
+            self.turn(move[0], move[1])
 
     @staticmethod
     def format_alg_to_turns(alg: str):
@@ -152,8 +156,9 @@ class Cube:
             result.append(prev)
         return result
 
-    def turn(self, rot_type: str, face: str):
+    def turn(self, turn_tuple):
         # new configuration for the pieces that will turn
+        rot_type, face = turn_tuple
         new_config = {}
         relevant_axis = ORIENTATION[face][0]
         orientation = ORIENTATION[face][1]
@@ -178,10 +183,3 @@ class Cube:
 
         self.cube_dict.update(new_config)
 
-# if __name__ == '__main__':
-#     # For scramble: L' D2 B' L2 U2 B R2 D2 U2 F2 U2 F2 L' R2 D' L R2 F' R
-#     cubestring = ['rowwwoyry', 'wrbwowgrb', 'rbgbggwgr', 'oboorbyry', 'gybybobwr', 'oygyygwgo']
-#     cube = Cube()
-#     print(cube.cube_dict)
-#     cube.turn(CW, "R")
-#     print(cube.cube_dict)
