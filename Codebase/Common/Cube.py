@@ -131,7 +131,10 @@ class Cube:
             else:
                 rot = "cw"
             face = move[0]
-            self.turn((rot, face))
+
+            self.cube_dict.update(general_turn(self.cube_dict, (rot,face)))
+            # self.turn((rot, face))
+
     def apply_alg_tuple(self, alg: list):
         for move in alg:
             self.turn(move[0], move[1])
@@ -182,4 +185,40 @@ class Cube:
                 new_config[tuple(key)] = val
 
         self.cube_dict.update(new_config)
+
+def general_turn(cube_dict, turn_tuple):
+    """
+    Returns a new configuration for the cubies on the layer that will be turned.
+    To be used together with the update built-in method for main cube dictionaries.
+
+    Parameters:
+    cube_dict - Current configuration of the cubies.
+    turn_tuple - Tuple formed by the rotation type (cw, ccw, dt) and the face that will turn (U, F, D, B, R, L)
+    """
+    # new configuration for the pieces that will turn
+    rot_type, face = turn_tuple
+    new_config = {}
+    relevant_axis = ORIENTATION[face][0]
+    orientation = ORIENTATION[face][1]
+    perm = TURN_MAPPING_DICT[rot_type][face]
+
+    if relevant_axis is None:
+        raise Exception(f"{face} is not a valid move notation.")
+
+    for cubie, colors in cube_dict.items():
+        # find the relevant cubies by axis and orientation
+        if cubie[relevant_axis] == orientation:
+            key = [None, None, None]
+            key[perm[X][TARGET_AXIS]] = perm[X][TARGET_REORIENTATION] * cubie[X]
+            key[perm[Y][TARGET_AXIS]] = perm[Y][TARGET_REORIENTATION] * cubie[Y]
+            key[perm[Z][TARGET_AXIS]] = perm[Z][TARGET_REORIENTATION] * cubie[Z]
+            val = [None, None, None]
+            val[perm[X][TARGET_AXIS]] = colors[X]
+            val[perm[Y][TARGET_AXIS]] = colors[Y]
+            val[perm[Z][TARGET_AXIS]] = colors[Z]
+            new_config[tuple(key)] = val
+
+    # Returns the cubies that change orientation
+    return new_config
+
 
