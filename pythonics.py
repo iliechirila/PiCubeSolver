@@ -1,4 +1,5 @@
 from Codebase.Solvers.CrossSolver import choose_valid_turns
 
-
-print(choose_valid_turns("U"))
+message = "0123"
+new_msg = message.append("4")
+print(new_msg)

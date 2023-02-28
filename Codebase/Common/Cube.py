@@ -137,13 +137,12 @@ class Cube:
 
     def apply_alg_tuple(self, alg: list):
         for move in alg:
-            self.turn(move[0], move[1])
+            self.turn((move[0], move[1]))
 
     @staticmethod
     def format_alg_to_turns(alg: str):
         # Separates each move, taking into
         result = []
-        i = 0
         prev = ''
         for char in alg:
             if char == ' ':
@@ -217,6 +216,8 @@ def general_turn(cube_dict, turn_tuple):
             val[perm[Y][TARGET_AXIS]] = colors[Y]
             val[perm[Z][TARGET_AXIS]] = colors[Z]
             new_config[tuple(key)] = val
+        else:
+            new_config[cubie] = colors
 
     # Returns the cubies that change orientation
     return new_config
