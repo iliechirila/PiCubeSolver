@@ -299,9 +299,6 @@ class CrossNode:
         """
         # Find the absolute metric
         abs_tot_distance = self._metric(self.solved_perm)
-        print(self.cross_edges)
-        print(self.solved_perm)
-        print(abs_tot_distance)
         min_tot_distance = 100
         # Try each of the 3 remaining relative positions
         # (rotations of side centers)
