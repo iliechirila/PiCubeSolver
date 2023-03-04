@@ -3,6 +3,8 @@ from copy import copy
 
 from Codebase.Common.Cube import Cube, general_turn
 from Codebase.Common.Turns import Y, X, Z, TURN_MAPPING_DICT, OPPOSITE_COLORS, CW, CCW, DT
+from Codebase.Solvers.BaseSolver import BaseSolver
+
 
 def choose_valid_turns(turn_space: list, last_turn: tuple):
     """
@@ -23,18 +25,14 @@ def generate_turn_space():
     return turn_space
 
 
-class CrossSolver:
+class CrossSolver(BaseSolver):
     def __init__(self, cube_dict):
-        self.cube_dict = cube_dict
-
-        self.d_color = ''.join(self.cube_dict[(0, -1, 0)])
+        super().__init__(cube_dict)
+        # Cross specific
         self.current_cross_edges = self._find_cross_edges()
         self.pos_of_solved_cross_edges = self._find_pos_of_solved_cross_edges()
         self.colors_of_side_colors = self._find_solved_side_colors()
 
-        # print(self.current_cross_edges)
-        # print(self.pos_of_solved_cross_edges)
-        # print(self.colors_of_side_colors)
         self.alg, self.open_sets, self.closed_sets = self._find_path()
 
     def _find_cross_edges(self):
@@ -136,80 +134,6 @@ class CrossSolver:
                                self.d_color, self.colors_of_side_colors)
                 self._move_up(cn)
 
-    def _move_up(self, cn):
-        """
-        Appends cn to the end of open_set and move it up the tree.
-        """
-        self.open_set.append(cn)
-
-        while True:
-            # Node info, compare f_cost and h_cost at the same time
-            cn_ind = self.open_set.index(cn)
-            cn_val = cn.f_cost + cn.h_cost/100
-
-            # If index is 0, can't move up anymore
-            if not cn_ind:
-                return
-
-            # The position above node n is int half of (n - 1)
-            cn_up_ind = (cn_ind - 1) // 2
-            cn_up = self.open_set[cn_up_ind]
-            cn_up_val = cn_up.f_cost + cn_up.h_cost/100
-
-            # Compare values
-            if cn_val < cn_up_val:
-                self._swap(cn_ind, cn_up_ind)
-            else:
-                return
-
-    def _move_down(self):
-        """
-        Sorts the top node down the heap.
-        """
-        set_len = len(self.open_set)
-
-        # Don't run if open_set is empty
-        if not set_len:
-            return
-
-        fn = self.open_set[0]
-        fn_val = fn.f_cost + fn.h_cost/100
-
-        while True:
-            fn_ind = self.open_set.index(fn)
-
-            left_ind = 2 * fn_ind + 1
-            right_ind = left_ind + 1
-
-            # Check if left node exists, if not we are finished
-            if set_len > left_ind:
-                left = self.open_set[left_ind]
-                left_val = left.f_cost + left.h_cost/100
-            else:
-                return
-
-            # Check if right node exists
-            if set_len > right_ind:
-                right = self.open_set[right_ind]
-                right_val = right.f_cost + right.h_cost/100
-            else:
-                right = None
-
-            # Left value must be less and either there is no right node or
-            # the left node is the lower choice
-            if (left_val < fn_val) and \
-                (right is None or left_val <= right_val):
-                self._swap(fn_ind, left_ind)
-            elif right is not None and right_val < fn_val:
-                self._swap(fn_ind, right_ind)
-            else:
-                return
-
-    def _swap(self, i, j):
-        """
-        Swaps elements at i and j in open_set
-        """
-        self.open_set[i], self.open_set[j] = self.open_set[j], self.open_set[i]
 
 class CrossNode:
     """
