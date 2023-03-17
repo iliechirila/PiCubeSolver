@@ -1,11 +1,14 @@
 import abc
 
+from Codebase.Common.Cube import Cube
+
 
 class BaseSolver:
     def __init__(self, cube_dict):
         self.cube_dict = cube_dict
         self.d_color = ''.join(self.cube_dict[(0, -1, 0)])
         self.u_color = ''.join(self.cube_dict[(0, 1, 0)])
+        self.solved_cube = Cube().cube_dict
 
     @classmethod
     def _find_path(self):
@@ -29,7 +32,7 @@ class BaseSolver:
             # The position above node n is int half of (n - 1)
             node_up_index = (node_index - 1) // 2
             node_up = self.open_set[node_up_index]
-            node_up_value = node_up.f_cost + node_up.h_cost/100
+            node_up_value = node_up.f_cost + node_up.h_cost / 100
 
             # Compare values
             if node_value < node_up_value:
@@ -48,7 +51,7 @@ class BaseSolver:
             return
 
         fn = self.open_set[0]
-        fn_val = fn.f_cost + fn.h_cost/100
+        fn_val = fn.f_cost + fn.h_cost / 100
 
         while True:
             fn_ind = self.open_set.index(fn)
@@ -59,21 +62,21 @@ class BaseSolver:
             # Check if left node exists, if not we are finished
             if set_len > left_ind:
                 left = self.open_set[left_ind]
-                left_val = left.f_cost + left.h_cost/100
+                left_val = left.f_cost + left.h_cost / 100
             else:
                 return
 
             # Check if right node exists
             if set_len > right_ind:
                 right = self.open_set[right_ind]
-                right_val = right.f_cost + right.h_cost/100
+                right_val = right.f_cost + right.h_cost / 100
             else:
                 right = None
 
             # Left value must be less and either there is no right node or
             # the left node is the lower choice
             if (left_val < fn_val) and \
-                (right is None or left_val <= right_val):
+                    (right is None or left_val <= right_val):
                 self._swap(fn_ind, left_ind)
             elif right is not None and right_val < fn_val:
                 self._swap(fn_ind, right_ind)
@@ -85,3 +88,42 @@ class BaseSolver:
         Swaps elements at i and j in open_set
         """
         self.open_set[i], self.open_set[j] = self.open_set[j], self.open_set[i]
+
+    def _find_pos_of_solved_cross_edges(self):
+        """
+        Finds the position of the cross edges when solved
+        """
+        center_dict = {}
+        # Find side center colors
+        for coord, color in self.cube_dict.items():
+            # Look only at centers
+            if coord.count(0) == 2:
+                # Don't look at Up or Down centers
+                if coord[1] == 0:
+                    center_dict[''.join(color)] = coord
+
+        # Dict with (k, v) = (non-white color, coordinate)
+        solved_perm = {}
+        for color, coord in center_dict.items():
+            solved_perm[color] = (coord[0], -1, coord[2])
+
+        return solved_perm
+
+    def _centers_key_color(self):
+        center_dict = {}
+        for coord, color in self.cube_dict.items():
+            # Look only at centers
+            if coord.count(0) == 2:
+                center_dict[''.join(color)] = coord
+        return center_dict
+    def _centers_key_coord(self):
+        center_dict = {}
+        for coord, color in self.cube_dict.items():
+            # Look only at centers
+            if coord.count(0) == 2:
+                center_dict[coord] = color
+        return center_dict
+
+    @staticmethod
+    def get_swap_dict(d):
+        return {v: k for k, v in d.items()}

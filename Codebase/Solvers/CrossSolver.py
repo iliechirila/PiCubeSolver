@@ -13,15 +13,17 @@ def choose_valid_turns(turn_space: list, last_turn: tuple):
     The other reason is to avoid U -> U since it is equivalent to U2
     """
     for turn in turn_space:
-        if turn[1] in (last_turn, OPPOSITE_COLORS[last_turn[1]]):
+        if turn[0] in (last_turn, OPPOSITE_COLORS[last_turn[0]]):
             turn_space.remove(turn)
 
     return turn_space
+
+
 def generate_turn_space():
     turn_space = []
     for ori in TURN_MAPPING_DICT.keys():
         for face in TURN_MAPPING_DICT[ori].keys():
-            turn_space.append((ori, face))
+            turn_space.append((face, ori))
     return turn_space
 
 
@@ -48,26 +50,6 @@ class CrossSolver(BaseSolver):
                 cross_edges[coord] = colors
 
         return cross_edges
-
-    def _find_pos_of_solved_cross_edges(self):
-        """
-        Finds the position of the cross edges when solved
-        """
-        center_dict = {}
-        # Find side center colors
-        for coord, color in self.cube_dict.items():
-            # Look only at centers
-            if coord.count(0) == 2:
-                # Don't look at Up or Down centers
-                if coord[1] == 0:
-                    center_dict[''.join(color)] = coord
-
-        # Dict with (k, v) = (non-white color, coordinate)
-        solved_perm = {}
-        for color, coord in center_dict.items():
-            solved_perm[color] = (coord[0], -1, coord[2])
-
-        return solved_perm
 
     def _find_solved_side_colors(self):
         """

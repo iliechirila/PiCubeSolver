@@ -55,3 +55,5 @@ OPPOSITE_COLORS = {
     "U": "D", "R": "L", "F": "B",
     "D": "U", "L": "R", "B": "F"
 }
+
+U, D, R, L, F, B = "U", "D", "R", "L", "F", "B"

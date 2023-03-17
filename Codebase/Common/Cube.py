@@ -135,7 +135,7 @@ class Cube:
                 rot = "cw"
             face = move[0]
 
-            self.cube_dict.update(general_turn(self.cube_dict, (rot,face)))
+            self.cube_dict.update(general_turn(self.cube_dict, (face,rot)))
             # self.turn((rot, face))
 
     def apply_alg_tuple(self, alg: list):
@@ -163,7 +163,7 @@ class Cube:
 
     def turn(self, turn_tuple):
         # new configuration for the pieces that will turn
-        rot_type, face = turn_tuple
+        face, rot_type = turn_tuple
         new_config = {}
         relevant_axis = ORIENTATION[face][0]
         orientation = ORIENTATION[face][1]
@@ -251,9 +251,12 @@ def general_turn(cube_dict, turn_tuple):
     Parameters:
     cube_dict - Current configuration of the cubies.
     turn_tuple - Tuple formed by the rotation type (cw, ccw, dt) and the face that will turn (U, F, D, B, R, L)
+
+    Returns:
+    new_config - dict containing information about cubies that changed
     """
     # new configuration for the pieces that will turn
-    rot_type, face = turn_tuple
+    face, rot_type = turn_tuple
     new_config = {}
     relevant_axis = ORIENTATION[face][0]
     orientation = ORIENTATION[face][1]
