@@ -2,12 +2,12 @@ from itertools import permutations
 
 from Codebase.Common.Cube import Cube
 from Codebase.Solvers.CrossSolver import choose_valid_turns
-
-
-if '':
-    print("hello")
-else:
-    print("woprld")
+color = ['r','b','g']
+# perm = frozenset(map(''.join, permutations(color)))
+perm = permutations(color)
+color2 =  ['b','g','r']
+# perm2 = frozenset(map(''.join, permutations(color2)))
+perm2 = permutations(color2)
 
 # def _cubie_key(color):
 #     return frozenset(map(''.join, permutations(color)))

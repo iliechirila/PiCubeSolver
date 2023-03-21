@@ -20,19 +20,36 @@ if __name__ == '__main__':
 
     cube = Cube()
     cube.apply_alg_std("D' F2 R U2 L B2 F2 L D2 L2 D2 R B' L B2 R' U' R' D B'")
-    cube_cpy = deepcopy(cube)
 
     cs = CrossSolver(cube.cube_dict)
     alg = cs.alg
     cube.apply_alg_tuple(alg)
-    print(alg)
+    print(f"Cross alg: {alg}")
 
     # cube.graph_cube()
 
+    # go_alg = [('L', 'ccw'), ('D', 'dt'), ('R', 'dt')]
 
+    # cube.apply_alg_tuple(go_alg)
+
+    # cube.graph_cube()
     f2l = F2LSolver(cube.cube_dict)
-    alg_f2l = f2l.alg_overall[-1]
-    print(alg_f2l)
+    for alg in f2l.alg_overall:
+        cube.apply_alg_tuple(alg)
+        cube.graph_cube()
 
-    cube_cpy.apply_alg_tuple(alg_f2l)
-    cube_cpy.graph_cube()
+"""
+['go', 'gr', 'bo', 'br']
+Pair: go
+[('L', 'ccw'), ('D', 'dt'), ('R', 'dt')]
+Pair: gr
+[('U', 'cw'), ('B', 'ccw'), ('L', 'ccw'), ('U', 'cw'), ('L', 'cw')]
+Pair: bo
+[('B', 'ccw'), ('R', 'cw'), ('F', 'cw'), ('R', 'cw'), ('D', 'ccw'), ('F', 'cw'), ('U', 'cw'), ('B', 'cw')]
+Pair: br
+[('R', 'ccw'), ('F', 'cw'), ('R', 'ccw'), ('B', 'ccw'), ('R', 'cw'), ('F', 'cw'), ('U', 'cw'), ('B', 'ccw'), ('D', 'cw'), ('B', 'ccw')]
+
+Process finished with exit code 0
+
+
+"""

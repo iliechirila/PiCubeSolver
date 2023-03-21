@@ -2,7 +2,7 @@ import itertools
 from collections import deque
 from copy import copy
 
-from Codebase.Common.Cube import general_turn
+from Codebase.Common.Cube import general_turn, Cube
 from Codebase.Common.Turns import U, D, R, L, F, B, CW, CCW, DT
 from Codebase.Solvers.BaseSolver import BaseSolver
 from Codebase.Solvers.CrossSolver import generate_turn_space, choose_valid_turns
@@ -15,22 +15,40 @@ class F2LSolver(BaseSolver):
 
         f2l_pairs = ['go', 'gr', 'bo', 'br']
 
+        f2l_pairs = ['go']
+
+
+
         self.alg_overall, self.open_sets_overall, self.closed_sets_overall = [], [], []
         self.centers = self._centers_key_color()
         self.cross = self._find_pos_of_solved_cross_edges()
 
+        print(self.cross)
         self.init_config = self.cross.copy()
         self.goal_config = self.cross.copy()
-
         for f2l_pair in f2l_pairs:
             # Add current/solved position to init_perm/goal_perm, respectively
             self._add_pair(f2l_pair)
-
+            print(f"Pair: {f2l_pair}")
+            print(f"Init config:{self.init_config}")
+            print(self.goal_config)
             alg, open_sets, closed_sets = self._find_path()
 
             self.alg_overall.append(alg)
             self.open_sets_overall.append(open_sets)
             self.closed_sets_overall.append(closed_sets)
+
+    def _find_pos_of_solved_cross_edges(self):
+        """
+        Finds the position of the cross edges when solved
+        """
+        cross_coords = [(1, -1, 0), (-1, -1, 0), (0, -1, 1), (0, -1, -1)]
+        # Dict with (k, v) = (non-white color, coordinate)
+        solved_perm = {}
+        for coord in cross_coords:
+            solved_perm[coord] = self.solved_cube[coord]
+
+        return solved_perm
 
     def _add_pair(self, f2l_pair: str):
         color1 = f2l_pair[0]
@@ -47,8 +65,16 @@ class F2LSolver(BaseSolver):
         self.init_config[edge_coord] = self.cube_dict[edge_coord]
         self.init_config[corner_coord] = self.cube_dict[corner_coord]
 
+
+        for coord, colors in self.solved_cube.items():
+            if color1 in colors and color2 in colors:
+                if coord.count(0) == 1:
+                    edge_coord = coord
+                elif self.d_color in colors:
+                    corner_coord = coord
         self.goal_config[edge_coord] = self.solved_cube[edge_coord]
         self.goal_config[corner_coord] = self.solved_cube[corner_coord]
+
 
 
     def _find_path(self):
@@ -85,9 +111,9 @@ class F2LSolver(BaseSolver):
             closed_set.append(current.cur_config)
 
             # Return if perm is equal to solved perm
-            print(current.abs_h_cost)
-            # if not current.abs_h_cost:
-            if current.abs_h_cost == 4:
+            # print(current.abs_h_cost)
+            if not current.abs_h_cost:
+            # if current.abs_h_cost == 0:
                 return current.alg, len(self.open_set), len(closed_set)
 
             # Create new objects and put in open_set to
@@ -209,12 +235,17 @@ class F2LNode:
         """
         Counts number of edge pieces that are wrongly flipped.
         """
+        # TODO flip penalty logic cause it stinked
         bad_flip = 0
-        for coord, colors in self.cur_config.items():
-            # Can only be wrongly flipped if on D or U face
-            if coord[1] != 0:
-                # But white sticker isn't on D or U face
-                if self.d_color in [colors[0], colors[2]]:
+        for coord, color in self.cur_config.items():
+            # frozenset(map(''.join, permutations(color)))
+            if coord in self.rel_goal_config.keys():
+                rel_colors = itertools.permutations(self.rel_goal_config[coord])
+            else:
+                rel_colors = ()
+            cur_colors = itertools.permutations(color)
+            if rel_colors == cur_colors:
+                if self.rel_goal_config[coord] != color:
                     bad_flip += 1
         return bad_flip
 
