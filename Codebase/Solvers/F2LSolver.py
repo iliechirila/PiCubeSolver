@@ -3,7 +3,7 @@ from collections import deque
 from copy import copy
 
 from Codebase.Common.Cube import general_turn, Cube
-from Codebase.Common.Turns import U, D, R, L, F, B, CW, CCW, DT
+from Codebase.Common.Turns import U, D, R, L, F, B, CW, CCW, DT, TURN_SPACE
 from Codebase.Solvers.BaseSolver import BaseSolver
 from Codebase.Solvers.CrossSolver import generate_turn_space, choose_valid_turns
 
@@ -14,23 +14,17 @@ class F2LSolver(BaseSolver):
         super().__init__(cube_dict)
 
         f2l_pairs = ['go', 'gr', 'bo', 'br']
-
-        f2l_pairs = ['go']
-
-
-
+        self.index = 0
+        f2l_pairs = ['rg', 'ob']
         self.alg_overall, self.open_sets_overall, self.closed_sets_overall = [], [], []
         self.centers = self._centers_key_color()
         self.cross = self._find_pos_of_solved_cross_edges()
 
-        print(self.cross)
         self.init_config = self.cross.copy()
         self.goal_config = self.cross.copy()
         for f2l_pair in f2l_pairs:
             # Add current/solved position to init_perm/goal_perm, respectively
             self._add_pair(f2l_pair)
-            print(f"Pair: {f2l_pair}")
-            print(f"Init config:{self.init_config}")
             print(self.goal_config)
             alg, open_sets, closed_sets = self._find_path()
 
@@ -82,7 +76,7 @@ class F2LSolver(BaseSolver):
         A* pathfinding algorithm to solve the first 2 layers of the cube.
         """
         slot_coord = (-1,0,-1) # just because
-        fn = F2LNode(self.cube_dict, self.solved_cube, [],
+        fn = F2LNode(self.init_config, self.solved_cube, [],
                           self.d_color, [], slot_coord)
 
         # Every single possible turn
@@ -111,9 +105,7 @@ class F2LSolver(BaseSolver):
             closed_set.append(current.cur_config)
 
             # Return if perm is equal to solved perm
-            # print(current.abs_h_cost)
             if not current.abs_h_cost:
-            # if current.abs_h_cost == 0:
                 return current.alg, len(self.open_set), len(closed_set)
 
             # Create new objects and put in open_set to
@@ -127,6 +119,8 @@ class F2LSolver(BaseSolver):
                     continue
 
                 fn = F2LNode(new_perm, self.goal_config, new_alg, self.d_color,current.did_slot_turn, current.slot_coord)
+                self.index += 1
+                print(self.index, fn.abs_h_cost)
                 self._move_up(fn)
 
 
@@ -142,6 +136,7 @@ class F2LNode:
         self.slot_coord = slot_coord
         self.did_slot_turn = self._slot(slot_turn, slot_coord)
         self.rel_goal_config = self._rel_goal_perm()
+        self.rel_goal_config_efficient_colors = self._rel_goal_config_efficient()
 
         # Metrics
         self.flip_penalty = 2 * self._flip_penalty()
@@ -157,6 +152,10 @@ class F2LNode:
             return self.goal_config.copy()
 
         return self.apply_turn(self.did_slot_turn)
+
+    def _rel_goal_config_efficient(self):
+        aux_config = self.rel_goal_config
+        return {frozenset(map(''.join, itertools.permutations(color))): (tuple(coord), color) for coord, color in aux_config.items()}
 
     def _slot(self, slot_turn, slot_coord):
         """
@@ -218,13 +217,13 @@ class F2LNode:
             new_ori = (tool_dict[last_turn_ori]+tool_dict[slot_ori]) % 4
             # Reverse the tool dict
             tool_dict = get_swap_dict(tool_dict)
-            new_ori = tool_dict[new_ori] # it is reversed so wwe get the str
+            new_ori = tool_dict[new_ori]  # it is reversed so wwe get the str
             if not slot_turn:
                 slot_turn = tool_dict[slot_turn]
             # either same move or the other face of the pair but same orientation???
             if new_ori:
                 # new orientation and the face of the slot
-                new_turn = (slot_turn[0],new_ori)
+                new_turn = (slot_turn[0], new_ori)
             else:
                 new_turn = ()
 
@@ -235,18 +234,26 @@ class F2LNode:
         """
         Counts number of edge pieces that are wrongly flipped.
         """
-        # TODO flip penalty logic cause it stinked
         bad_flip = 0
         for coord, color in self.cur_config.items():
             # frozenset(map(''.join, permutations(color)))
-            if coord in self.rel_goal_config.keys():
-                rel_colors = itertools.permutations(self.rel_goal_config[coord])
-            else:
-                rel_colors = ()
-            cur_colors = itertools.permutations(color)
-            if rel_colors == cur_colors:
-                if self.rel_goal_config[coord] != color:
-                    bad_flip += 1
+            # So if we apply a turn on the current config, will the pieces be in place, and if so, are they flipped?
+            cur_colors = frozenset(map(''.join, itertools.permutations(color)))
+            if (coord == self.rel_goal_config_efficient_colors[cur_colors][0] and
+                color != self.rel_goal_config_efficient_colors[cur_colors][1]):
+
+                bad_flip += 1
+            # for coord_rel, color_rel in self.rel_goal_config.items():
+            #     if all(color_rel_i in cur_colors for color_rel_i in color_rel):
+            #     # if color_rel[0] in cur_colors and color_rel[1] in cur_colors and color_rel[2] in cur_colors:
+            #         if color != color_rel:
+            #             bad_flip += 1
+            #             break
+            # rel_colors = frozenset(map(''.join, color))
+
+            # if rel_colors == cur_colors:
+            #     if self.goal_config[coord] != color:
+            #         bad_flip += 1
         return bad_flip
 
     def _slot_metric(self):

@@ -19,7 +19,8 @@ if __name__ == '__main__':
     # R2 F D2 B2 D R' B2
 
     cube = Cube()
-    cube.apply_alg_std("D' F2 R U2 L B2 F2 L D2 L2 D2 R B' L B2 R' U' R' D B'")
+    # cube.apply_alg_std("D' F2 R U2 L B2 F2 L D2 L2 D2 R B' L B2 R' U' R' D B'")
+    cube.apply_alg_std("L2 R' U2 D2 B L B2 F R D R' L' D2 B' F2 R2 F U L' R2")
 
     cs = CrossSolver(cube.cube_dict)
     alg = cs.alg
@@ -37,11 +38,14 @@ if __name__ == '__main__':
     for alg in f2l.alg_overall:
         cube.apply_alg_tuple(alg)
         cube.graph_cube()
+    print(f2l.alg_overall)
 
 """
 ['go', 'gr', 'bo', 'br']
 Pair: go
-[('L', 'ccw'), ('D', 'dt'), ('R', 'dt')]
+[[('F', 'ccw'), ('U', 'cw'), ('F', 'cw'), ('U', 'ccw'), ('F', 'dt'), ('L', 'dt'), ('F', 'dt'), ('L', 'dt')]]
+[[('U', 'cw'), ('F', 'cw'), ('U', 'dt'), ('F', 'dt'), ('L', 'cw'), ('F', 'cw'), ('L', 'ccw')]]
+AND IT WORKS
 Pair: gr
 [('U', 'cw'), ('B', 'ccw'), ('L', 'ccw'), ('U', 'cw'), ('L', 'cw')]
 Pair: bo

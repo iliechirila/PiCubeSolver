@@ -9,6 +9,7 @@ color2 =  ['b','g','r']
 # perm2 = frozenset(map(''.join, permutations(color2)))
 perm2 = permutations(color2)
 
+print(color != color2)
 # def _cubie_key(color):
 #     return frozenset(map(''.join, permutations(color)))
 # f2l_pair = 'gr'
