@@ -89,7 +89,7 @@ class BaseSolver:
         """
         self.open_set[i], self.open_set[j] = self.open_set[j], self.open_set[i]
 
-    def _find_pos_of_solved_cross_edges(self):
+    def _find_pos_of_solved_cross_edges(self) -> dict:
         """
         Finds the position of the cross edges when solved
         """
@@ -109,21 +109,15 @@ class BaseSolver:
 
         return solved_perm
 
-    def _centers_key_color(self):
+    def _centers_key_coord(self) -> dict:
         center_dict = {}
         for coord, color in self.cube_dict.items():
             # Look only at centers
             if coord.count(0) == 2:
-                center_dict[''.join(color)] = coord
-        return center_dict
-    def _centers_key_coord(self):
-        center_dict = {}
-        for coord, color in self.cube_dict.items():
-            # Look only at centers
-            if coord.count(0) == 2:
-                center_dict[coord] = color
+                index_non_zero = [index for index, value in enumerate(coord) if value != 0][0]
+                center_dict[color[index_non_zero]] = coord
         return center_dict
 
     @staticmethod
-    def get_swap_dict(d):
+    def get_swap_dict(d: dict) -> dict:
         return {v: k for k, v in d.items()}

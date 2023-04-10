@@ -62,11 +62,12 @@ TURN_MAPPING_DICT = {
 }
 
 TURN_SPACE = [
+              (U, CW), (U, CCW), (U, DT),
+              (L, CW), (L, CCW), (L, DT),
               (F, CW), (F, CCW), (F, DT),
               (R, CW), (R, CCW), (R, DT),
-              (L, CW), (L, CCW), (L, DT),
               (B, CW), (B, CCW), (B, DT),
-              (D, CW), (D, CCW), (D, DT),
-              (U, CW), (U, CCW), (U, DT)
+              (D, CW), (D, CCW), (D, DT)
+
 ]
 

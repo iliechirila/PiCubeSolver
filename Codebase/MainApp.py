@@ -1,10 +1,9 @@
 from copy import deepcopy
 
 from Codebase.Common.Cube import Cube
-from sys import getsizeof
 
 from Codebase.Solvers.CrossSolver import CrossSolver
-from Codebase.Solvers.F2LSolver import F2LSolver
+from Codebase.Solvers.F2LSolverV2 import F2LSolverV3, F2LSolverV4
 
 """
 This is the main file where everything is supposed to run from at this point in time.
@@ -26,19 +25,23 @@ if __name__ == '__main__':
     alg = cs.alg
     cube.apply_alg_tuple(alg)
     print(f"Cross alg: {alg}")
-
+    # F R' B L' D R' D2 R
     # cube.graph_cube()
 
-    # go_alg = [('L', 'ccw'), ('D', 'dt'), ('R', 'dt')]
-
-    # cube.apply_alg_tuple(go_alg)
-
-    # cube.graph_cube()
-    f2l = F2LSolver(cube.cube_dict)
-    for alg in f2l.alg_overall:
-        cube.apply_alg_tuple(alg)
-        cube.graph_cube()
-    print(f2l.alg_overall)
+    # rg_alg = [('U', 'dt'), ('R', 'cw'), ('U', 'cw'), ('R', 'ccw')]
+    # cube.apply_alg_tuple(rg_alg)
+    f2l_pairs = [(('r', 'b'), ('r', 'g', 'w'), 'cw'),
+                 (('r', 'g'), ('o', 'g', 'w'), 'ccw'),
+                 (('o', 'g'), ('o', 'b', 'w'), 'cw'),
+                 (('o', 'b'), ('r', 'b', 'w'), 'ccw')]
+    f2l = F2LSolverV4(cube.cube_dict)
+    print(f2l.algs_used)
+    cube.cube_dict = f2l.cube_dict
+    cube.graph_cube()
+    # for alg in f2l.alg_overall:
+    #     cube.apply_alg_tuple(alg)
+    #     cube.graph_cube()
+    # print(f2l.alg_overall)
 
 """
 ['go', 'gr', 'bo', 'br']

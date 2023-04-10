@@ -135,7 +135,7 @@ class Cube:
                 rot = "cw"
             face = move[0]
 
-            self.cube_dict.update(general_turn(self.cube_dict, (face,rot)))
+            self.cube_dict.update(general_turn(self.cube_dict, (face, rot)))
             # self.turn((rot, face))
 
     def apply_alg_tuple(self, alg: list):

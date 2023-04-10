@@ -2,7 +2,7 @@ from collections import deque
 from copy import copy
 
 from Codebase.Common.Cube import Cube, general_turn
-from Codebase.Common.Turns import Y, X, Z, TURN_MAPPING_DICT, OPPOSITE_COLORS, CW, CCW, DT
+from Codebase.Common.Turns import Y, X, Z, TURN_MAPPING_DICT, OPPOSITE_COLORS, CW, CCW, DT, TURN_SPACE
 from Codebase.Solvers.BaseSolver import BaseSolver
 
 
@@ -12,19 +12,26 @@ def choose_valid_turns(turn_space: list, last_turn: tuple):
     This is done to eliminate the possibility of infinite loops such as U -> U' -> U ...
     The other reason is to avoid U -> U since it is equivalent to U2
     """
+    # print(f"LAST TURN: {last_turn}")
+    # print(f"INITIAL TURN SPACE: {turn_space}")
+    valid_turns = []
     for turn in turn_space:
-        if turn[0] in (last_turn, OPPOSITE_COLORS[last_turn[0]]):
-            turn_space.remove(turn)
+        if turn[0] != last_turn[0] and turn[0] != OPPOSITE_COLORS[last_turn[0]]:
+            valid_turns.append(turn)
+    #     else:
+    #         print(f"REMOVED {turn}")
+    # print(f"FINAL   TURN SPACE: {valid_turns}")
 
     return turn_space
 
 
 def generate_turn_space():
-    turn_space = []
-    for ori in TURN_MAPPING_DICT.keys():
-        for face in TURN_MAPPING_DICT[ori].keys():
-            turn_space.append((face, ori))
-    return turn_space
+    # turn_space = []
+    # for ori in TURN_MAPPING_DICT.keys():
+    #     for face in TURN_MAPPING_DICT[ori].keys():
+    #         turn_space.append((face, ori))
+    # return turn_space
+    return copy(TURN_SPACE)
 
 
 class CrossSolver(BaseSolver):
