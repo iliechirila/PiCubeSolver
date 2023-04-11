@@ -1,6 +1,7 @@
 from Codebase.Common.Cube import Cube
 from Codebase.Solvers.CrossSolver import CrossSolver
 from Codebase.Solvers.F2LSolver import F2LSolver
+from Codebase.Solvers.OLLSolver import OLLSolver
 
 """
 This is the main file where everything is supposed to run from at this point in time.
@@ -32,13 +33,14 @@ if __name__ == '__main__':
     #              (('o', 'g'), ('o', 'b', 'w'), 'cw'),
     #              (('o', 'b'), ('r', 'b', 'w'), 'ccw')]
     f2l = F2LSolver(cube.cube_dict)
-    # cube.cube_dict = f2l.cube_dict
-    cube.graph_cube()
     for alg in f2l.alg_overall:
-        print(alg)
         cube.apply_alg_tuple(alg)
-        cube.graph_cube()
-    print(f2l.alg_overall)
+    cube.graph_cube()
+
+    oll = OLLSolver(cube.cube_dict)
+    if oll.oll_alg:
+        cube.apply_alg_std(oll.oll_alg)
+    cube.graph_cube()
 
 """
 ['go', 'gr', 'bo', 'br']

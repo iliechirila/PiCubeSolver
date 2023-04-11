@@ -25,6 +25,5 @@ from Codebase.Solvers.CrossSolver import choose_valid_turns
 # # print("whot")
 #
 # print(f2l_key)
-a,b = (1,2)
-
-print(a,b)
+dictio = {():"wow"}
+print(dictio[()])

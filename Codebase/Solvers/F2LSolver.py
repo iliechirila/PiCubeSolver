@@ -22,7 +22,7 @@ class F2LSolver(BaseSolver):
         self.alg_overall, self.open_sets_overall, self.closed_sets_overall = [], [], []
         self.centers = self._centers()
         self.cross = self._find_pos_of_solved_cross_edges()
-        self.index = 0
+        # self.index = 0
         self.init_config = self.cross.copy()
         self.goal_config = self.cross.copy()
         for f2l_pair in f2l_pairs:
@@ -129,8 +129,8 @@ class F2LSolver(BaseSolver):
             # Create new objects and put in open_set to
             # check next if perm hasn't already been found
             for turn in turn_space_current:
-                self.index += 1
-                print(self.index, current.abs_h_cost, current.did_slot_turn, current.alg)
+                # self.index += 1
+                # print(self.index, current.abs_h_cost, current.did_slot_turn, current.alg)
                 new_perm = current.apply_turn(turn)
                 # new_perm = {cubie_key(color): (list(coord), color)
                 #               for coord, color in new_perm.items()}
