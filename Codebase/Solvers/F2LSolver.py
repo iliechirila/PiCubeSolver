@@ -17,7 +17,6 @@ class F2LSolver(BaseSolver):
         self.cube_perm = {cubie_key(color): (list(coord), color)
                           for coord, color in cube_dict.items()}
         f2l_pairs = ['go', 'gr', 'bo', 'br']
-        f2l_pairs = ['go']
         self.d_color = ''.join(cube_dict[(0, -1, 0)])
         self.u_color = ''.join(cube_dict[(0, 1, 0)])
         self.alg_overall, self.open_sets_overall, self.closed_sets_overall = [], [], []
@@ -32,10 +31,16 @@ class F2LSolver(BaseSolver):
             print(f"Goal for pair {f2l_pair}: {self.goal_config}")
             alg, open_sets, closed_sets, cur_config = self._find_path(f2l_pair)
             print(f"Current config:{cur_config}")
-            # self.init_config = cur_config
+            self.init_config = self.goal_config.copy()
             self.alg_overall.append(alg)
             self.open_sets_overall.append(open_sets)
             self.closed_sets_overall.append(closed_sets)
+            # TURN DUDE JUST TURN
+            self.apply_alg_tuple(alg)
+
+    def apply_alg_tuple(self, alg: list):
+        for move in alg:
+            self.cube_perm = _new_turn(move, self.cube_perm)
 
     def _centers(self):
         """
@@ -88,6 +93,7 @@ class F2LSolver(BaseSolver):
         f2l_key = [cubie_key(f2l_pair),
                    cubie_key(f2l_pair + self.d_color)]
         slot_coord = tuple(self.goal_config[f2l_key[0]][0])
+        print(slot_coord)
         fn = F2LNode(self.init_config, self.goal_config, [],
                      self.d_color, [], slot_coord)
 
@@ -108,7 +114,7 @@ class F2LSolver(BaseSolver):
                 turn_space_current = turn_space
 
             # # Remove from open set
-            self.open_set.remove(current)
+            # self.open_set.remove(current)
             # Move last node to top of tree
             self.open_set.rotate(1)
             # Compare it downwards
@@ -141,6 +147,36 @@ def cubie_key(color):
     return frozenset(map(''.join, itertools.permutations(color)))
 
 
+def _new_turn(turn_tuple, config):
+    face, rot_type = turn_tuple
+    new_config = {}
+    relevant_axis = ORIENTATION[face][0]
+    orientation = ORIENTATION[face][1]
+    perm = TURN_MAPPING_DICT[rot_type][face]
+
+    if relevant_axis is None:
+        raise Exception(f"{face} is not a valid move notation.")
+
+    for stickers, cordlor in config.items():
+        # find the relevant cubies by axis and orientation
+        coord, colors = cordlor
+        if coord[relevant_axis] == orientation:
+            key = [None, None, None]
+            key[perm[X][TARGET_AXIS]] = perm[X][TARGET_REORIENTATION] * coord[X]
+            key[perm[Y][TARGET_AXIS]] = perm[Y][TARGET_REORIENTATION] * coord[Y]
+            key[perm[Z][TARGET_AXIS]] = perm[Z][TARGET_REORIENTATION] * coord[Z]
+            val = [None, None, None]
+            val[perm[X][TARGET_AXIS]] = colors[X]
+            val[perm[Y][TARGET_AXIS]] = colors[Y]
+            val[perm[Z][TARGET_AXIS]] = colors[Z]
+            new_config[stickers] = (key, val)
+        else:
+            new_config[stickers] = cordlor
+
+    # Returns the cubies that change orientation
+    return new_config
+
+
 class F2LNode:
     def __init__(self, current_config, goal_config, alg, d_color, slot_turn, slot_coord):
         self.d_color = d_color
@@ -167,7 +203,7 @@ class F2LNode:
         if not self.did_slot_turn or not self.did_slot_turn[0]:
             return self.goal_config.copy()
 
-        new_config = self.apply_turn(self.did_slot_turn)
+        new_config = self.apply_turn(self.did_slot_turn, self.goal_config)
         # new_config = {cubie_key(color): (list(coord), color)
         #                   for coord, color in new_config.items()}
         return new_config
@@ -189,13 +225,13 @@ class F2LNode:
 
         turn_dict = {
             # Back Left
-            (-1, 0, -1): [(), (L, CW), (L, CCW), (L, DT), (), (B, CW), (B, CCW), (B, DT)],
+            (-1, 0, -1): [(), (L, CW), (L, DT), (L, CCW), (), (B, CW), (B, DT), (B, CCW)],
             # Front Left
-            (-1, 0, 1): [(L, CW), (L, CCW), (L, DT), (), (F, CW), (F, CCW), (F, DT), ()],
+            (-1, 0, 1): [(), (L, CW),(L, DT), (L, CCW), (), (F, CW), (F, DT), (F, CCW)],
             # Back Right
-            (1, 0, -1): [(), (R, CW), (R, CCW), (R, DT), (), (B, CW), (B, CCW), (B, DT)],
+            (1, 0, -1): [(), (R, CW), (R, DT), (R, CCW), (), (B, CW), (B, DT), (B, CCW)],
             # Front Right
-            (1, 0, 1): [(), (R, CW), (R, CCW), (R, DT), (), (F, CW), (F, CCW), (F, DT)]
+            (1, 0, 1): [(), (R, CW), (R, DT), (R, CCW), (), (F, CW), (F, DT), (F, CCW)]
         }
 
         valid_moves = turn_dict[slot_coord]
@@ -260,38 +296,9 @@ class F2LNode:
             tot_distance += distance
 
         return tot_distance
-    def apply_turn(self, turn):
+    def apply_turn(self, turn, config=None):
         # transform from the efficient form to the general form
         # cube_dict = {tuple(coord): color for k, (coord, color) in self.cur_config.items()}
         # return general_turn(cube_dict, turn)
-        return self._new_turn(turn)
-
-
-    def _new_turn(self, turn_tuple):
-        face, rot_type = turn_tuple
-        new_config = {}
-        relevant_axis = ORIENTATION[face][0]
-        orientation = ORIENTATION[face][1]
-        perm = TURN_MAPPING_DICT[rot_type][face]
-
-        if relevant_axis is None:
-            raise Exception(f"{face} is not a valid move notation.")
-
-        for stickers, cordlor in self.cur_config.items():
-            # find the relevant cubies by axis and orientation
-            coord, colors = cordlor
-            if coord[relevant_axis] == orientation:
-                key = [None, None, None]
-                key[perm[X][TARGET_AXIS]] = perm[X][TARGET_REORIENTATION] * coord[X]
-                key[perm[Y][TARGET_AXIS]] = perm[Y][TARGET_REORIENTATION] * coord[Y]
-                key[perm[Z][TARGET_AXIS]] = perm[Z][TARGET_REORIENTATION] * coord[Z]
-                val = [None, None, None]
-                val[perm[X][TARGET_AXIS]] = colors[X]
-                val[perm[Y][TARGET_AXIS]] = colors[Y]
-                val[perm[Z][TARGET_AXIS]] = colors[Z]
-                new_config[stickers] = (key, val)
-            else:
-                new_config[stickers] = cordlor
-
-        # Returns the cubies that change orientation
-        return new_config
+        config = config or self.cur_config
+        return _new_turn(turn, config)
