@@ -25,5 +25,11 @@ from Codebase.Solvers.CrossSolver import choose_valid_turns
 # # print("whot")
 #
 # print(f2l_key)
-dictio = {():"wow"}
-print(dictio[()])
+i = "i"
+j = "j"
+
+for l in range(4):
+    for k in range(3):
+        if k == 2:
+            break
+        print(i, l, j, k)

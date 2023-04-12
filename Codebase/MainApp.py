@@ -17,14 +17,14 @@ if __name__ == '__main__':
 
     cube = Cube()
     # cube.apply_alg_std("D' F2 R U2 L B2 F2 L D2 L2 D2 R B' L B2 R' U' R' D B'")
-    cube.apply_alg_std("L2 R' U2 D2 B L B2 F R D R' L' D2 B' F2 R2 F U L' R2")
-
+    # cube.apply_alg_std("L2 R' U2 D2 B L B2 F R D R' L' D2 B' F2 R2 F U L' R2")
+    cube.apply_alg_std("D' F2 R2 D F' D' F' D2 F2 L U' R' F' U2 F2 D2 F' L' F2 D' U2 L2 B D R' D B F U B'")
     cs = CrossSolver(cube.cube_dict)
     alg = cs.alg
     cube.apply_alg_tuple(alg)
     print(f"Cross alg: {alg}")
     # F R' B L' D R' D2 R
-    # cube.graph_cube()
+    cube.graph_cube()
 
     # rg_alg = [('U', 'dt'), ('R', 'cw'), ('U', 'cw'), ('R', 'ccw')]
     # cube.apply_alg_tuple(rg_alg)
