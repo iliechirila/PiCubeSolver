@@ -11,12 +11,14 @@ class OLLSolver(BaseSolver):
         self.turns_needed = ['', 'U ', 'U2 ', "U' "]
         self.top_cubies = {}
         self.check_top_color = {}
+        # TODO Add OLL skip check
         for i in range(4):
             self.top_cubies = self._top_cubies()
             self.check_top_color = self._check_top_color()
             self.oll_alg = self._find_oll_alg()
             if self.oll_alg:
                 # print("Found him")
+                print(f"OLL Index is {i}")
                 self.oll_alg = self.turns_needed[i] + self.oll_alg
                 break
             self.cube_dict = general_turn(self.cube_dict, (U, CW))

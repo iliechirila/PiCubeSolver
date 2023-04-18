@@ -25,11 +25,23 @@ from Codebase.Solvers.CrossSolver import choose_valid_turns
 # # print("whot")
 #
 # print(f2l_key)
-i = "i"
-j = "j"
+# i = "i"
+# j = "j"
 
-for l in range(4):
-    for k in range(3):
-        if k == 2:
-            break
-        print(i, l, j, k)
+# for l in range(4):
+#     for k in range(3):
+#         if k == 2:
+#             break
+#         print(i, l, j, k)
+# front = "green"
+# back  = "blue"
+# right = "red"
+# my_dict = {(0,0,1): [front, back, right]}
+# print(my_dict)
+# front = "white"
+# print(my_dict)
+
+
+my_list = ['', 'g', '']
+result = next((s for s in my_list if s), None)
+print(result)  # Output: "g"

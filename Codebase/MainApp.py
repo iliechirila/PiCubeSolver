@@ -2,6 +2,7 @@ from Codebase.Common.Cube import Cube
 from Codebase.Solvers.CrossSolver import CrossSolver
 from Codebase.Solvers.F2LSolver import F2LSolver
 from Codebase.Solvers.OLLSolver import OLLSolver
+from Codebase.Solvers.PLLSolver import PLLSolver
 
 """
 This is the main file where everything is supposed to run from at this point in time.
@@ -18,7 +19,12 @@ if __name__ == '__main__':
     cube = Cube()
     # cube.apply_alg_std("D' F2 R U2 L B2 F2 L D2 L2 D2 R B' L B2 R' U' R' D B'")
     # cube.apply_alg_std("L2 R' U2 D2 B L B2 F R D R' L' D2 B' F2 R2 F U L' R2")
-    cube.apply_alg_std("D' F2 R2 D F' D' F' D2 F2 L U' R' F' U2 F2 D2 F' L' F2 D' U2 L2 B D R' D B F U B'")
+    ################ BAD SCRAMBLE FLIPS 3 PIECES IN F2L #####################################
+    # cube.apply_alg_std("F L' D U F D L U R2 D2 L' R2 B2 F2 L2 R2 D' F2 R2 B2 L R2 B' U R2 B2 L' U2 F D")
+    #########################################################################################
+
+    cube.apply_alg_std("B' F D R' F L2 F' L D L R' D U' B R' F' D2 L R B2 D U' R U2 R2 F D' B2 F2 U2")
+
     cs = CrossSolver(cube.cube_dict)
     alg = cs.alg
     cube.apply_alg_tuple(alg)
@@ -26,20 +32,34 @@ if __name__ == '__main__':
     # F R' B L' D R' D2 R
     cube.graph_cube()
 
-    # rg_alg = [('U', 'dt'), ('R', 'cw'), ('U', 'cw'), ('R', 'ccw')]
-    # cube.apply_alg_tuple(rg_alg)
-    # f2l_pairs = [(('r', 'b'), ('r', 'g', 'w'), 'cw'),
-    #              (('r', 'g'), ('o', 'g', 'w'), 'ccw'),
-    #              (('o', 'g'), ('o', 'b', 'w'), 'cw'),
-    #              (('o', 'b'), ('r', 'b', 'w'), 'ccw')]
-    f2l = F2LSolver(cube.cube_dict)
-    for alg in f2l.alg_overall:
+    # f2l = F2LSolver(cube.cube_dict)
+    print("F2L algs:")
+    # for alg in f2l.alg_overall:
+    #     print(alg)
+    #     cube.apply_alg_tuple(alg)
+    # cube.graph_cube()
+    f2l_algs = [
+        [('L', 'cw'), ('U', 'cw'), ('L', 'cw'), ('R', 'ccw'), ('B', 'cw'), ('L', 'cw'), ('B', 'ccw'), ('R', 'cw'),   ('L', 'cw')],
+        [('U', 'ccw'), ('R', 'cw'), ('U', 'ccw'), ('R', 'ccw')],
+        [('L', 'cw'), ('U', 'ccw'), ('L', 'ccw'), ('U', 'dt'), ('L', 'cw'), ('U', 'ccw'), ('L', 'ccw')],
+        [('U', 'ccw'), ('R', 'ccw'), ('U', 'cw'), ('R', 'cw'), ('U', 'ccw'), ('R', 'ccw'), ('U', 'dt'), ('R', 'ccw'), ('F', 'cw'), ('R', 'cw'), ('F', 'ccw'), ('R', 'cw')]
+    ]
+    for alg in f2l_algs:
         cube.apply_alg_tuple(alg)
     cube.graph_cube()
 
     oll = OLLSolver(cube.cube_dict)
+    print("OLL Alg:")
     if oll.oll_alg:
+        print(oll.oll_alg)
         cube.apply_alg_std(oll.oll_alg)
+    cube.graph_cube()
+
+    pll = PLLSolver(cube.cube_dict)
+    print("PLL Alg:")
+    if pll.pll_alg:
+        print(pll.pll_alg)
+        cube.apply_alg_std(pll.pll_alg)
     cube.graph_cube()
 
 """
