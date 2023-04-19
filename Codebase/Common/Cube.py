@@ -124,6 +124,8 @@ class Cube:
 
     def apply_alg_std(self, alg: str):
         # Format the alg string into the notation used in the TURN_MAPPING_DICT
+        while alg[-1] == ' ':
+            alg = alg[:len(alg)-1]
         alg = alg.split(' ')
         # Apply the turns on the cube using the turn method
         for move in alg:

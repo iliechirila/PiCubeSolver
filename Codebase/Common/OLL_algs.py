@@ -99,7 +99,7 @@ oll_algs = {
         {(-1, 1, -1): (True, False, False), (0, 1, -1): (False, True, False), (1, 1, -1): (False, False, True),
          (-1, 1, 0): (False, True, False), (1, 1, 0): (False, True, False),
          (-1, 1, 1): (False, False, True), (0, 1, 1): (False, True, False), (1, 1, 1): (False, True, False)},
-        "R' U L U' R U L'"
+        "L' U' L U' L' U2 L"
     ],
     "OLL 27 - Sune": [
         {(-1, 1, -1): (False, False, True), (0, 1, -1): (False, True, False), (1, 1, -1): (True, False, False),
@@ -321,7 +321,7 @@ oll_algs = {
         {(-1, 1, -1): (True, False, False), (0, 1, -1): (False, True, False), (1, 1, -1): (False, True, False),
          (-1, 1, 0): (True, False, False), (1, 1, 0): (False, True, False),
          (-1, 1, 1): (False, False, True), (0, 1, 1): (False, False, True), (1, 1, 1): (True, False, False)},
-        "R B2 L' B' L B' R'"
+        "L F2 R' F' R F' L'"
     ],
     "OLL 33 - Key": [
         {(-1, 1, -1): (False, False, True), (0, 1, -1): (False, False, True), (1, 1, -1): (False, True, False),

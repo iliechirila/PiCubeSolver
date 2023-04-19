@@ -21,9 +21,11 @@ if __name__ == '__main__':
     # cube.apply_alg_std("L2 R' U2 D2 B L B2 F R D R' L' D2 B' F2 R2 F U L' R2")
     ################ BAD SCRAMBLE FLIPS 3 PIECES IN F2L #####################################
     # cube.apply_alg_std("F L' D U F D L U R2 D2 L' R2 B2 F2 L2 R2 D' F2 R2 B2 L R2 B' U R2 B2 L' U2 F D")
+    # cube.apply_alg_std("F R2 B' R2 B' U2 F' D' L R D' U2 B2 U L D2 B' F' L2 D' L2 R U R F")
     #########################################################################################
-
-    cube.apply_alg_std("B' F D R' F L2 F' L D L R' D U' B R' F' D2 L R B2 D U' R U2 R2 F D' B2 F2 U2")
+    # ok
+    # F' D' U B F2 L U' R B F2 R2 D2 F U L' R' F2 D U B' R B2 R' F R2 F' L2 D2 B R2
+    cube.apply_alg_std("F D2 R2 F D2 B2 L2 D2 U2 F' D2 F' R' U R D' U B' R' F L'")
 
     cs = CrossSolver(cube.cube_dict)
     alg = cs.alg
@@ -34,19 +36,18 @@ if __name__ == '__main__':
 
     # f2l = F2LSolver(cube.cube_dict)
     print("F2L algs:")
-    # for alg in f2l.alg_overall:
-    #     print(alg)
-    #     cube.apply_alg_tuple(alg)
-    # cube.graph_cube()
-    f2l_algs = [
-        [('L', 'cw'), ('U', 'cw'), ('L', 'cw'), ('R', 'ccw'), ('B', 'cw'), ('L', 'cw'), ('B', 'ccw'), ('R', 'cw'),   ('L', 'cw')],
-        [('U', 'ccw'), ('R', 'cw'), ('U', 'ccw'), ('R', 'ccw')],
-        [('L', 'cw'), ('U', 'ccw'), ('L', 'ccw'), ('U', 'dt'), ('L', 'cw'), ('U', 'ccw'), ('L', 'ccw')],
-        [('U', 'ccw'), ('R', 'ccw'), ('U', 'cw'), ('R', 'cw'), ('U', 'ccw'), ('R', 'ccw'), ('U', 'dt'), ('R', 'ccw'), ('F', 'cw'), ('R', 'cw'), ('F', 'ccw'), ('R', 'cw')]
-    ]
+    f2l_algs = [[('L', 'cw'), ('U', 'dt'), ('L', 'dt'), ('U', 'dt'), ('L', 'cw')],
+    [('R', 'cw'), ('B', 'ccw'), ('U', 'ccw'), ('B', 'cw'), ('R', 'cw'), ('B', 'ccw'), ('R', 'ccw'), ('B', 'cw'),('R', 'ccw')],
+    [('L', 'ccw'), ('B', 'ccw'), ('L', 'dt'), ('U', 'cw'), ('L', 'dt'), ('B', 'cw'), ('L', 'dt'), ('U', 'ccw'),('L', 'ccw'), ('U', 'cw'), ('L', 'cw'), ('U', 'ccw'), ('L', 'ccw')],
+    [('U', 'dt'), ('R', 'ccw'), ('U', 'cw'), ('R', 'ccw'), ('F', 'cw'), ('R', 'cw'), ('F', 'ccw'), ('R', 'cw')]]
     for alg in f2l_algs:
+        print(alg)
         cube.apply_alg_tuple(alg)
     cube.graph_cube()
+
+    # for alg in f2l_algs:
+    #     cube.apply_alg_tuple(alg)
+    # cube.graph_cube()
 
     oll = OLLSolver(cube.cube_dict)
     print("OLL Alg:")

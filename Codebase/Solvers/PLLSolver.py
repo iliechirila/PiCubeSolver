@@ -9,7 +9,7 @@ class PLLSolver(BaseSolver):
     def __init__(self, cube_dict):
         super().__init__(cube_dict)
         self.pll_alg = None
-        self.turns_needed = ['', 'U', 'U2', "U'"]
+        self.turns_needed = ['', 'U ', 'U2 ', "U' "]
         self.turns_needed_tuple = [(), (U, CW), (U, DT), (U, CCW)]
 
         # TODO Add PLL skip check
@@ -36,10 +36,12 @@ class PLLSolver(BaseSolver):
                 self.top_cubies = self._top_cubies(cpy_cube_dict)
                 # ugh multiple for-ladders. It is what it is
                 alg = self._check_algs_rotation(pll_algs)
+                print(f"PLL Cube dict found? {cpy_cube_dict}")
                 print(alg)
                 if alg:
                     print(j)
-                    self.pll_alg = self.turns_needed[j] + " " + alg + " " + self.turns_needed[4-i]
+                    print(3-i)
+                    self.pll_alg = self.turns_needed[j] + alg + " " + self.turns_needed[i].rstrip(' ')
                     break
             if alg:
                 break

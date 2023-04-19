@@ -24,11 +24,11 @@ def pll_algs_dict(top, front, left, back, right):
              (-1, 1, 1): (left, top, front), (0, 1, 1): ('', top, front), (1, 1, 1): (right, top, front)},
             "R' U R' U' R3 U' R' U R U R2"
         ],
-        "Z Permutation": [
+        "Z Permutation": [ # OK
             {(-1, 1, -1): (left, top, back), (0, 1, -1): ('', top, left), (1, 1, -1): (right, top, back),
              (-1, 1, 0): (back, top, ''), (1, 1, 0): (front, top, ''),
              (-1, 1, 1): (left, top, front), (0, 1, 1): ('', top, right), (1, 1, 1): (right, top, front)},
-            "R' U' R2 U R U R' U' R U R U' R U' R'"
+            "R' L F' R2 L2 B' R2 L2 F' R' L D2 R2 L2 U"
         ],
         "A Permutation : a": [
             {(-1, 1, -1): (back, top, right), (0, 1, -1): ('', top, back), (1, 1, -1): (front, top, right),
