@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="media"/>
+  <qresource prefix="button_icons">
+    <file>resources/Solid_red.png</file>
+  </qresource>
+</RCC>
