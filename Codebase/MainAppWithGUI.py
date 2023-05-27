@@ -6,7 +6,7 @@ try:
     app = mkQApp("CubeSolver")
     window = MainWindowGUIControllerClass()
     cube_list = ["wwwwwwwww", "orbgrbooo", "ggggggggg", "rrrrrrrrr", "bbbbbbbbb", "yyyyyyyyy"]
-    # window.update_cube_projection(cube_list)
+    window.update_cube_projection(cube_list)
 
     # window.set_color_to_component(window.label, 'b')
     window.show()

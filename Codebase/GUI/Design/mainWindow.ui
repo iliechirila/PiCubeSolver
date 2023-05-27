@@ -108,7 +108,7 @@
      <rect>
       <x>430</x>
       <y>380</y>
-      <width>81</width>
+      <width>155</width>
       <height>81</height>
      </rect>
     </property>
@@ -158,21 +158,21 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="g7">
        <property name="text">
         <string>TextLabel</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="2" column="1">
       <widget class="QLabel" name="g8">
        <property name="text">
         <string>TextLabel</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="2">
+     <item row="2" column="2">
       <widget class="QLabel" name="g9">
        <property name="text">
         <string>TextLabel</string>
@@ -186,7 +186,7 @@
      <rect>
       <x>430</x>
       <y>290</y>
-      <width>81</width>
+      <width>155</width>
       <height>81</height>
      </rect>
     </property>
@@ -236,21 +236,21 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="w7">
        <property name="text">
         <string>TextLabel</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="2" column="1">
       <widget class="QLabel" name="w8">
        <property name="text">
         <string>TextLabel</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="2">
+     <item row="2" column="2">
       <widget class="QLabel" name="w9">
        <property name="text">
         <string>TextLabel</string>
@@ -264,7 +264,7 @@
      <rect>
       <x>430</x>
       <y>470</y>
-      <width>81</width>
+      <width>155</width>
       <height>81</height>
      </rect>
     </property>
@@ -314,21 +314,21 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="y7">
        <property name="text">
         <string>TextLabel</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="2" column="1">
       <widget class="QLabel" name="y8">
        <property name="text">
         <string>TextLabel</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="2">
+     <item row="2" column="2">
       <widget class="QLabel" name="y9">
        <property name="text">
         <string>TextLabel</string>
@@ -340,9 +340,9 @@
    <widget class="QWidget" name="gridLayoutWidget_4">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>380</y>
-      <width>81</width>
+      <x>220</x>
+      <y>370</y>
+      <width>155</width>
       <height>81</height>
      </rect>
     </property>
@@ -418,9 +418,9 @@
    <widget class="QWidget" name="gridLayoutWidget_5">
     <property name="geometry">
      <rect>
-      <x>520</x>
+      <x>600</x>
       <y>380</y>
-      <width>81</width>
+      <width>155</width>
       <height>81</height>
      </rect>
     </property>
@@ -470,21 +470,21 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="r7">
        <property name="text">
         <string>TextLabel</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="2" column="1">
       <widget class="QLabel" name="r8">
        <property name="text">
         <string>TextLabel</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="2">
+     <item row="2" column="2">
       <widget class="QLabel" name="r9">
        <property name="text">
         <string>TextLabel</string>
@@ -496,9 +496,9 @@
    <widget class="QWidget" name="gridLayoutWidget_6">
     <property name="geometry">
      <rect>
-      <x>610</x>
+      <x>780</x>
       <y>380</y>
-      <width>81</width>
+      <width>155</width>
       <height>81</height>
      </rect>
     </property>
@@ -506,13 +506,6 @@
      <property name="sizeConstraint">
       <enum>QLayout::SetDefaultConstraint</enum>
      </property>
-     <item row="3" column="0">
-      <widget class="QLabel" name="b7">
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="2">
       <widget class="QLabel" name="b6">
        <property name="text">
@@ -555,14 +548,21 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="2" column="0">
+      <widget class="QLabel" name="b7">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
       <widget class="QLabel" name="b8">
        <property name="text">
         <string>TextLabel</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="2">
+     <item row="2" column="2">
       <widget class="QLabel" name="b9">
        <property name="text">
         <string>TextLabel</string>
