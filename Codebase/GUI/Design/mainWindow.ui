@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1213</width>
-    <height>622</height>
+    <height>803</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>520</y>
+      <y>640</y>
       <width>111</width>
       <height>61</height>
      </rect>
@@ -31,7 +31,7 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>520</y>
+      <y>640</y>
       <width>101</width>
       <height>61</height>
      </rect>
@@ -45,8 +45,8 @@
      <rect>
       <x>70</x>
       <y>20</y>
-      <width>561</width>
-      <height>261</height>
+      <width>320</width>
+      <height>180</height>
      </rect>
     </property>
     <property name="layoutDirection">
@@ -570,6 +570,19 @@
       </widget>
      </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="detect_colors_2">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>640</y>
+      <width>101</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Detect Colors 2</string>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

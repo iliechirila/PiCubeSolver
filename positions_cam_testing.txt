@@ -1,0 +1,34 @@
+white positions
+
+Clicked at position (297, 231) - HSV: [ 10 210 255] - Identified Color: orange
+Clicked at position (320, 221) - HSV: [108 224 188] - Identified Color: blue
+Clicked at position (342, 211) - HSV: [106  44 255] - Identified Color: Unknown
+Clicked at position (323, 237) - HSV: [ 68 205 167] - Identified Color: green
+Clicked at position (357, 227) - HSV: [102  18 211] - Identified Color: white
+Clicked at position (366, 216) - HSV: [  5 205 127] - Identified Color: red
+Clicked at position (351, 246) - HSV: [107 227 193] - Identified Color: blue
+Clicked at position (373, 233) - HSV: [ 11 208 255] - Identified Color: orange
+Clicked at position (391, 222) - HSV: [  7 212 136] - Identified Color: red
+
+
+orange pos
+Clicked at position (286, 258) - HSV: [ 98 208 255] - Identified Color: blue
+Clicked at position (315, 263) - HSV: [ 30 102 255] - Identified Color: yellow
+Clicked at position (338, 271) - HSV: [  9 255 255] - Identified Color: red
+Clicked at position (289, 287) - HSV: [  9 250 255] - Identified Color: red
+Clicked at position (315, 297) - HSV: [ 30  96 255] - Identified Color: Unknown
+Clicked at position (341, 304) - HSV: [ 82 155 255] - Identified Color: green
+Clicked at position (291, 320) - HSV: [ 87 146 255] - Identified Color: Unknown
+Clicked at position (315, 326) - HSV: [ 96 210 255] - Identified Color: blue
+Clicked at position (344, 333) - HSV: [  8 232 255] - Identified Color: red
+
+green
+Clicked at position (370, 270) - HSV: [ 33 171 128] - Identified Color: yellow
+Clicked at position (392, 257) - HSV: [ 32 166 132] - Identified Color: yellow
+Clicked at position (411, 247) - HSV: [105 132  91] - Identified Color: Unknown
+Clicked at position (371, 302) - HSV: [ 72  12 108] - Identified Color: white
+Clicked at position (391, 293) - HSV: [ 62 195  77] - Identified Color: green
+Clicked at position (411, 277) - HSV: [ 34  18 116] - Identified Color: white
+Clicked at position (370, 334) - HSV: [ 33 171 139] - Identified Color: yellow
+Clicked at position (390, 326) - HSV: [  4 184  93] - Identified Color: Unknown
+Clicked at position (412, 307) - HSV: [ 33 184 132] - Identified Color: yellow
