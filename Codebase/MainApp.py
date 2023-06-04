@@ -25,7 +25,7 @@ if __name__ == '__main__':
     #########################################################################################
     # ok
     # F' D' U B F2 L U' R B F2 R2 D2 F U L' R' F2 D U B' R B2 R' F R2 F' L2 D2 B R2
-    cube.apply_alg_std("F D2 R2 F D2 B2 L2 D2 U2 F' D2 F' R' U R D' U B' R' F L'")
+    cube.apply_alg_std("R U R' U'")
 
     cs = CrossSolver(cube.cube_dict)
     alg = cs.alg
@@ -34,12 +34,13 @@ if __name__ == '__main__':
     # F R' B L' D R' D2 R
     cube.graph_cube()
 
-    # f2l = F2LSolver(cube.cube_dict)
+    f2l = F2LSolver(cube.cube_dict)
+    f2l_algs = f2l.alg_overall
     print("F2L algs:")
-    f2l_algs = [[('L', 'cw'), ('U', 'dt'), ('L', 'dt'), ('U', 'dt'), ('L', 'cw')],
-    [('R', 'cw'), ('B', 'ccw'), ('U', 'ccw'), ('B', 'cw'), ('R', 'cw'), ('B', 'ccw'), ('R', 'ccw'), ('B', 'cw'),('R', 'ccw')],
-    [('L', 'ccw'), ('B', 'ccw'), ('L', 'dt'), ('U', 'cw'), ('L', 'dt'), ('B', 'cw'), ('L', 'dt'), ('U', 'ccw'),('L', 'ccw'), ('U', 'cw'), ('L', 'cw'), ('U', 'ccw'), ('L', 'ccw')],
-    [('U', 'dt'), ('R', 'ccw'), ('U', 'cw'), ('R', 'ccw'), ('F', 'cw'), ('R', 'cw'), ('F', 'ccw'), ('R', 'cw')]]
+    # f2l_algs = [[('L', 'cw'), ('U', 'dt'), ('L', 'dt'), ('U', 'dt'), ('L', 'cw')],
+    # [('R', 'cw'), ('B', 'ccw'), ('U', 'ccw'), ('B', 'cw'), ('R', 'cw'), ('B', 'ccw'), ('R', 'ccw'), ('B', 'cw'),('R', 'ccw')],
+    # [('L', 'ccw'), ('B', 'ccw'), ('L', 'dt'), ('U', 'cw'), ('L', 'dt'), ('B', 'cw'), ('L', 'dt'), ('U', 'ccw'),('L', 'ccw'), ('U', 'cw'), ('L', 'cw'), ('U', 'ccw'), ('L', 'ccw')],
+    # [('U', 'dt'), ('R', 'ccw'), ('U', 'cw'), ('R', 'ccw'), ('F', 'cw'), ('R', 'cw'), ('F', 'ccw'), ('R', 'cw')]]
     for alg in f2l_algs:
         print(alg)
         cube.apply_alg_tuple(alg)
