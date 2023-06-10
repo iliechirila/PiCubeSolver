@@ -21,7 +21,7 @@ class PointsController:
                 lst = list()
                 for index, coords in points.items():
                     lst.append(Point(face, int(index), int(coords[0]), int(coords[1]), basic_color))
-                points_dict.update({face:lst})
+                points_dict.update({face: lst})
             return points_dict
 
     def update_point(self, face, index, x, y, color):
@@ -33,13 +33,14 @@ class PointsController:
                 break
 
     def update_file(self):
+        print("Updating points.json ...")
         with open('./Common/positions.json', 'w') as file:
             file.seek(0)
             data = dict()
             for face, points in self.points_dict.items():
-                data.update({face: []})
+                data.update({face: {}})
                 for point in points:
-                    data[face].append({point.index: [point.x, point.y]})
+                    data[face].update({point.index: [point.x, point.y]})
             json.dump(data, file, indent=2)
 
 class Point:
