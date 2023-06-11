@@ -59,8 +59,9 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.cap = CameraThread("Cam1", 0, [])
         self.cap2 = CameraThread("Cam2", 1, [])
         self.center_colors = ['w', 'o', 'g', 'r', 'b', 'y']
+        self.current_table_face = None
         self.aspect_ratio = 1280 / 720
-        self.tableWidget.setRowCount(9)  # 9 cubies on every face
+        self.tableWidget.setRowCount(0)  # the table is empty
         self.points_controller = PointsController()
         self.connect_events()
         self.update_table_values()
@@ -94,6 +95,8 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.button_update_table_right.clicked.connect(lambda: self.set_coordinates("Right"))
         self.button_update_table_back.clicked.connect(lambda: self.set_coordinates("Back"))
         self.button_update_table_down.clicked.connect(lambda: self.set_coordinates("Down"))
+        self.button_display_all_points.clicked.connect(self.display_all_points)
+        self.button_clear_all_points.clicked.connect(self.clear_all_coordinates)
         self.button_update_coordinate_file.clicked.connect(self.points_controller.update_file)
         self.tableWidget.itemChanged.connect(self.update_coordinates_from_table_update)
         self.button_detect_all_colors.clicked.connect(self.detect_colors_method)
@@ -101,6 +104,10 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.cap.start()
         self.cap2.frame_ready.connect(self.update_frame_2)
         self.cap2.start()
+
+    def display_all_points(self):
+        self.set_all_coordinates()
+        self.update_table_values_all()
 
     def toggle_centers_detection(self):
         check = self.checkBox_detect_centers.isChecked()
@@ -174,6 +181,23 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
             self.cap2.set_coordinates(coordinates)
             self.cap.set_coordinates([])
 
+    def set_all_coordinates(self):
+        coordinates_cap = []
+        coordinates_cap2 = []
+        for face, points in self.points_controller.points_dict.items():
+            if face in ["Left", "Front", "Up"]:
+                coordinates_cap.extend(points)
+            elif face in ["Right", "Back", "Down"]:
+                coordinates_cap2.extend(points)
+        self.cap.set_coordinates(coordinates_cap)
+        self.cap2.set_coordinates(coordinates_cap2)
+
+    def clear_all_coordinates(self):
+        self.cap.set_coordinates([])
+        self.cap2.set_coordinates([])
+        self.clear_table()
+
+
     def setup_cube_projection(self):
         for i in range(9):
             whiteLabel = self.grid_white.itemAt(i).widget()
@@ -210,26 +234,54 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
                 label = grid.itemAtPosition(int(i / 3), i % 3).widget()
                 label.setStyleSheet(f"background-color: {colors[face[i]]}; border: 1px solid black;")
 
-    def update_table_values(self, face = 'Up'):
-        # important, otherwise we enter an infinite loop
+    def clear_table(self):
+        self.tableWidget.clearContents()
+        self.tableWidget.setRowCount(0)
+
+    def update_table_values(self, face=None):
+        # !!!!! important, otherwise we enter an infinite loop (1/2)
         self.tableWidget.itemChanged.disconnect()
+        if face:
+            self.tableWidget.setRowCount(9)
+            self.current_table_face = face
+            row_cnt = 0
+            points_lst = self.points_controller.points_dict[face]
+            for point in points_lst:
+                table_item = QTableWidgetItem(str(face))
+                self.tableWidget.setItem(row_cnt, 0, table_item)
+                table_item = QTableWidgetItem(str(point.index))
+                self.tableWidget.setItem(row_cnt, 1, table_item)
+                table_item = QTableWidgetItem(str(point.x))
+                self.tableWidget.setItem(row_cnt, 2, table_item)
+                table_item = QTableWidgetItem(str(point.y))
+                self.tableWidget.setItem(row_cnt, 3, table_item)
+                table_item = QTableWidgetItem(str(point.color))
+                self.tableWidget.setItem(row_cnt, 4, table_item)
 
+                row_cnt = row_cnt + 1
+        # !!!!! important, otherwise we enter an infinite loop (2/2)
+        self.tableWidget.itemChanged.connect(self.update_coordinates_from_table_update)
+
+    def update_table_values_all(self):
+        # !!!!! important, otherwise we enter an infinite loop (1/2)
+        self.tableWidget.itemChanged.disconnect()
+        self.tableWidget.setRowCount(54)
         row_cnt = 0
-        points_lst = self.points_controller.points_dict[face]
-        for point in points_lst:
-            table_item = QTableWidgetItem(str(face))
-            self.tableWidget.setItem(row_cnt, 0, table_item)
-            table_item = QTableWidgetItem(str(point.index))
-            self.tableWidget.setItem(row_cnt, 1, table_item)
-            table_item = QTableWidgetItem(str(point.x))
-            self.tableWidget.setItem(row_cnt, 2, table_item)
-            table_item = QTableWidgetItem(str(point.y))
-            self.tableWidget.setItem(row_cnt, 3, table_item)
-            table_item = QTableWidgetItem(str(point.color))
-            self.tableWidget.setItem(row_cnt, 4, table_item)
+        for face, points_lst in self.points_controller.points_dict.items():
+            for point in points_lst:
+                table_item = QTableWidgetItem(str(face))
+                self.tableWidget.setItem(row_cnt, 0, table_item)
+                table_item = QTableWidgetItem(str(point.index))
+                self.tableWidget.setItem(row_cnt, 1, table_item)
+                table_item = QTableWidgetItem(str(point.x))
+                self.tableWidget.setItem(row_cnt, 2, table_item)
+                table_item = QTableWidgetItem(str(point.y))
+                self.tableWidget.setItem(row_cnt, 3, table_item)
+                table_item = QTableWidgetItem(str(point.color))
+                self.tableWidget.setItem(row_cnt, 4, table_item)
 
-            row_cnt = row_cnt + 1
-        # important, otherwise we enter an infinite loop
+                row_cnt = row_cnt + 1
+        # !!!!! important, otherwise we enter an infinite loop (2/2)
         self.tableWidget.itemChanged.connect(self.update_coordinates_from_table_update)
 
     # def set_color_to_component(self, component, color):
@@ -319,10 +371,12 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # in case the cube orientation is not standard, or we do not use center detection,
         # simply replace the colors in the centers
-        for i in range(6):
-            colors = colors_list[i]
-            center = self.center_colors[i]
-            new_colors = colors[:4] + center + colors[5:]
-            colors_list[i] = new_colors
-
+        if not self.checkBox_detect_centers.isChecked():
+            for i in range(6):
+                colors = colors_list[i]
+                center = self.center_colors[i]
+                new_colors = colors[:4] + center + colors[5:]
+                colors_list[i] = new_colors
+        print(colors_list)
         self.update_cube_projection(colors_list)
+        self.update_table_values()
