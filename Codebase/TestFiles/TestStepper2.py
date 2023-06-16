@@ -14,8 +14,8 @@ GPIO.output(STEP, GPIO.LOW)
 GPIO.output(DIR, GPIO.LOW)
 
 
-steps = 50
-delay = 0.01
+steps = 200
+delay = 0.05
 
 for i in range(steps):
     print(f"Step {i}")

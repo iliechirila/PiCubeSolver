@@ -28,9 +28,9 @@ class F2LSolver(BaseSolver):
         for f2l_pair in f2l_pairs:
             # Add current/solved position to init_perm/goal_config, respectively
             self._add_pair(f2l_pair)
-            print(f"Goal for pair {f2l_pair}: {self.goal_config}")
+            # print(f"Goal for pair {f2l_pair}: {self.goal_config}")
             alg, open_sets, closed_sets, cur_config = self._find_path(f2l_pair)
-            print(f"Current config:{cur_config}")
+            # print(f"Current config:{cur_config}")
             self.init_config = self.goal_config.copy()
             self.alg_overall.append(alg)
             self.open_sets_overall.append(open_sets)

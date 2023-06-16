@@ -1,6 +1,6 @@
 from itertools import product
 
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 
 from Codebase.Common.Turns import TURN_MAPPING_DICT, X, Y, Z, ORIENTATION, TARGET_AXIS, TARGET_REORIENTATION
 
@@ -190,60 +190,60 @@ class Cube:
 
         self.cube_dict.update(new_config)
 
-    def graph_cube(self, gap_color='k', gap_width=2, bg_color='w',
-                   w='ghostwhite', y='gold', g='forestgreen',
-                   b='midnightblue', r='crimson', o='darkorange'):
-        """
-        Graphs the cube for easy visualization with optional arguments for
-        visual preference
+    # def graph_cube(self, gap_color='k', gap_width=2, bg_color='w',
+    #                w='ghostwhite', y='gold', g='forestgreen',
+    #                b='midnightblue', r='crimson', o='darkorange'):
+    #     """
+    #     Graphs the cube for easy visualization with optional arguments for
+    #     visual preference
 
-        Parameters:
-        gap_color - (default 'k') The color of the gap between all of the
-                     stickers
-        gap_width - (default 2) The width of the gap between of the stickers.
-        bg_color - (default 'w') The background color of the plot
-        w - (default ghostwhite) The color of the white stickers
-        y - (default gold) The color of the yellow stickers
-        g - (default forestgreen) The color of the green stickers
-        b - (default midnightblue) The color of the blue stickers
-        r - (default crimson) The color of the red stickers
-        o - (default darkorange) The color of the orange stickers
-        """
-        X, Y = np.meshgrid([0, 1], [0, 1])
-        Z = np.array([[0.5, 0.5], [0.5, 0.5]])
+    #     Parameters:
+    #     gap_color - (default 'k') The color of the gap between all of the
+    #                  stickers
+    #     gap_width - (default 2) The width of the gap between of the stickers.
+    #     bg_color - (default 'w') The background color of the plot
+    #     w - (default ghostwhite) The color of the white stickers
+    #     y - (default gold) The color of the yellow stickers
+    #     g - (default forestgreen) The color of the green stickers
+    #     b - (default midnightblue) The color of the blue stickers
+    #     r - (default crimson) The color of the red stickers
+    #     o - (default darkorange) The color of the orange stickers
+    #     """
+    #     X, Y = np.meshgrid([0, 1], [0, 1])
+    #     Z = np.array([[0.5, 0.5], [0.5, 0.5]])
 
-        # Creating the color scheme for each cubie
-        colors = {'w': w, 'y': y, 'g': g, 'b': b, 'r': r, 'o': o, '': ''}
-        perm_colors = {}
-        for cubie in self.cube_dict:
-            c = self.cube_dict[cubie]
-            perm_colors[cubie] = [colors[c[0]], colors[c[1]], colors[c[2]]]
+    #     # Creating the color scheme for each cubie
+    #     colors = {'w': w, 'y': y, 'g': g, 'b': b, 'r': r, 'o': o, '': ''}
+    #     perm_colors = {}
+    #     for cubie in self.cube_dict:
+    #         c = self.cube_dict[cubie]
+    #         perm_colors[cubie] = [colors[c[0]], colors[c[1]], colors[c[2]]]
 
-        # Create figure for plot
-        fig = plt.figure()
-        ax = fig.add_subplot(111, projection='3d')
-        ax.set_xlim(-1, 2)
-        ax.set_ylim(-1, 2)
-        ax.set_zlim(-1, 2)
-        ax.set_facecolor(bg_color)
-        ax.axis('off')
+    #     # Create figure for plot
+    #     fig = plt.figure()
+    #     ax = fig.add_subplot(111, projection='3d')
+    #     ax.set_xlim(-1, 2)
+    #     ax.set_ylim(-1, 2)
+    #     ax.set_zlim(-1, 2)
+    #     ax.set_facecolor(bg_color)
+    #     ax.axis('off')
 
-        # Will create square of appropriate color at appropriate coordinate
-        for cubie in perm_colors:
-            if cubie[0] != 0:
-                ax.plot_surface(Y + cubie[2], Z + cubie[0] * 1.5, X + cubie[1],
-                                edgecolors=gap_color, linewidth=gap_width,
-                                color=perm_colors[cubie][0])
-            if cubie[1] != 0:
-                ax.plot_surface(Y + cubie[2], X + cubie[0], Z + cubie[1] * 1.5,
-                                edgecolors=gap_color, linewidth=gap_width,
-                                color=perm_colors[cubie][1])
-            if cubie[2] != 0:
-                ax.plot_surface(Z + cubie[2] * 1.5, X + cubie[0], Y + cubie[1],
-                                edgecolors=gap_color, linewidth=gap_width,
-                                color=perm_colors[cubie][2])
+    #     # Will create square of appropriate color at appropriate coordinate
+    #     for cubie in perm_colors:
+    #         if cubie[0] != 0:
+    #             ax.plot_surface(Y + cubie[2], Z + cubie[0] * 1.5, X + cubie[1],
+    #                             edgecolors=gap_color, linewidth=gap_width,
+    #                             color=perm_colors[cubie][0])
+    #         if cubie[1] != 0:
+    #             ax.plot_surface(Y + cubie[2], X + cubie[0], Z + cubie[1] * 1.5,
+    #                             edgecolors=gap_color, linewidth=gap_width,
+    #                             color=perm_colors[cubie][1])
+    #         if cubie[2] != 0:
+    #             ax.plot_surface(Z + cubie[2] * 1.5, X + cubie[0], Y + cubie[1],
+    #                             edgecolors=gap_color, linewidth=gap_width,
+    #                             color=perm_colors[cubie][2])
 
-        plt.show()
+    #     plt.show()
 
 def general_turn(cube_dict, turn_tuple):
     """

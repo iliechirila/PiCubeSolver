@@ -36,8 +36,8 @@ class PLLSolver(BaseSolver):
                 self.top_cubies = self._top_cubies(cpy_cube_dict)
                 # ugh multiple for-ladders. It is what it is
                 alg = self._check_algs_rotation(pll_algs)
-                print(f"PLL Cube dict found? {cpy_cube_dict}")
-                print(alg)
+                # print(f"PLL Cube dict found? {cpy_cube_dict}")
+                # print(alg)
                 if alg:
                     print(j)
                     print(3-i)
@@ -50,9 +50,9 @@ class PLLSolver(BaseSolver):
         for name, perm_alg in pll_algs.items():
             perm, alg = perm_alg
             found = True
-            if name == "G Permutation: a":
-                print(self.top_cubies)
-                print(perm)
+            # if name == "G Permutation: a":
+                # print(self.top_cubies)
+                # print(perm)
             for coord, colors_pattern in perm.items():
 
                 if self.top_cubies[coord] != list(colors_pattern):
