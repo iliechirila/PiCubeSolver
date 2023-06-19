@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from PyQt5 import Qt
-from PyQt5.QtCore import QTimer, Qt, QThread, pyqtSignal, pyqtSlot, QSize
+from PyQt5.QtCore import QTimer, Qt, QThread, pyqtSignal, pyqtSlot, QSize, QMutex
 from PyQt5.QtGui import QColor, QImage, QPixmap, QPainter, QPen, QFont
 from PyQt5.QtWidgets import QApplication, QTableWidgetItem
 
@@ -17,6 +17,18 @@ class CameraThread(QThread):
         self.name = name
         self.video = cv2.VideoCapture(index)
         self.coordinates = coordinates
+        self.mutex = QMutex()
+        self.apply_filter = False
+        self.lower_color = np.array([0,0,0])
+        self.upper_color = np.array([255,255,255])
+
+    def set_apply_filter(self, value, lower_color=[0,0,0], upper_color=[255,255,255]):
+        self.mutex.lock()
+        self.apply_filter = value
+        self.lower_color = np.array(lower_color)
+        self.upper_color = np.array(upper_color)
+        print(value, lower_color, upper_color)
+        self.mutex.unlock()
 
     def set_coordinates(self, coordinates):
         self.coordinates = coordinates
@@ -24,15 +36,33 @@ class CameraThread(QThread):
     def run(self):
         while True:
             ret, frame = self.video.read()
-
             if ret:
-                # Draw points on the frame
+                # resource sharing
+                self.mutex.lock()
+                apply_filter = self.apply_filter
+                self.mutex.unlock()
+
+                if self.apply_filter:
+                    # Convert frame to HSV
+                    hsv_image = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+                    # Define lower and upper bounds for the color range
+                    lower_color = np.array([10, 100, 100])  # Adjust the values for your desired color range
+                    upper_color = np.array([20, 255, 255])  # Adjust the values for your desired color range
+
+                    # Apply the color filter
+                    mask = cv2.inRange(hsv_image, self.lower_color, self.upper_color)
+                    filtered_image = cv2.bitwise_and(frame, frame, mask=mask)
+                else:
+                    filtered_image = frame
+
+                # Draw points on the filtered frame
                 for point in self.coordinates:
                     x = point.x
                     y = point.y
-                    cv2.circle(frame, (x, y), 5, (0, 0, 255), -1)
+                    cv2.circle(filtered_image, (x, y), 5, (0, 0, 255), -1)
 
-                rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                # Convert filtered frame to RGB for display in PyQt
+                rgb_image = cv2.cvtColor(filtered_image, cv2.COLOR_BGR2RGB)
                 h, w, ch = rgb_image.shape
                 bytes_per_line = ch * w
                 q_image = QImage(rgb_image.data, w, h, bytes_per_line, QImage.Format_RGB888)
@@ -64,6 +94,7 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tableWidget.setRowCount(0)  # the table is empty
         self.points_controller = PointsController()
         self.connect_events()
+        self.disable_hsv_layout()
         self.update_table_values()
         print("Created Main Window GUI in Controller")
 
@@ -100,6 +131,8 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.button_update_coordinate_file.clicked.connect(self.points_controller.update_file)
         self.tableWidget.itemChanged.connect(self.update_coordinates_from_table_update)
         self.button_detect_all_colors.clicked.connect(self.detect_colors_method)
+        self.checkBox_edit_color_intervals.stateChanged.connect(self.toggle_hsv_detection)
+        self.comboBox_colors_HSV.currentIndexChanged.connect(self.change_hsv_filter)
         self.cap.frame_ready.connect(self.update_frame)
         self.cap.start()
         self.cap2.frame_ready.connect(self.update_frame_2)
@@ -117,6 +150,58 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
             self.check_centers_detection()
         else:
             self.button_detect_all_colors.setEnabled(True)
+
+    def toggle_hsv_detection(self):
+        print("Toggled")
+        if self.checkBox_edit_color_intervals.isChecked():
+            print("Checked")
+            self.enable_hsv_layout(enable=True)
+            self.change_hsv_filter()
+        else:
+            print("Unchecked")
+            self.disable_hsv_layout(disable=True)
+
+    def enable_hsv_layout(self, enable = True):
+        self.comboBox_colors_HSV.setEnabled(enable)
+        self.slider_hue_max.setEnabled(enable)
+        self.slider_hue_min.setEnabled(enable)
+        self.hue_max.setEnabled(enable)
+        self.hue_min.setEnabled(enable)
+        self.slider_saturation_max.setEnabled(enable)
+        self.slider_saturation_min.setEnabled(enable)
+        self.saturation_max.setEnabled(enable)
+        self.saturation_min.setEnabled(enable)
+        self.slider_value_max.setEnabled(enable)
+        self.slider_value_min.setEnabled(enable)
+        self.value_max.setEnabled(enable)
+        self.value_min.setEnabled(enable)
+        self.button_save_hsv_to_file.setEnabled(enable)
+        self.cap.set_apply_filter(True)
+        self.cap2.set_apply_filter(True)
+
+    def disable_hsv_layout(self, disable = True):
+        self.comboBox_colors_HSV.setDisabled(disable)
+        self.slider_hue_max.setDisabled(disable)
+        self.slider_hue_min.setDisabled(disable)
+        self.hue_max.setDisabled(disable)
+        self.hue_min.setDisabled(disable)
+        self.slider_saturation_max.setDisabled(disable)
+        self.slider_saturation_min.setDisabled(disable)
+        self.saturation_max.setDisabled(disable)
+        self.saturation_min.setDisabled(disable)
+        self.slider_value_max.setDisabled(disable)
+        self.slider_value_min.setDisabled(disable)
+        self.value_max.setDisabled(disable)
+        self.value_min.setDisabled(disable)
+        self.button_save_hsv_to_file.setDisabled(disable)
+        self.cap.set_apply_filter(False)
+        self.cap2.set_apply_filter(False)
+
+    def change_hsv_filter(self):
+        color = self.comboBox_colors_HSV.currentText().lower()
+        self.cap.set_apply_filter(True, self.color_ranges[color][0], self.color_ranges[color][1])
+        self.cap2.set_apply_filter(True, self.color_ranges[color][0], self.color_ranges[color][1])
+
 
     def check_centers_detection(self):
         W, O, G, R, B, Y = 'W', 'O', 'G', 'R', 'B', 'Y'
