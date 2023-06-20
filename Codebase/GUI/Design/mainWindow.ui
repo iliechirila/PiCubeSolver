@@ -924,6 +924,19 @@
            </item>
           </widget>
          </item>
+         <item>
+          <spacer name="horizontalSpacer_8">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
         </layout>
        </item>
        <item>
@@ -959,6 +972,9 @@
             <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="10,1">
              <item>
               <widget class="QSlider" name="slider_hue_min">
+               <property name="maximum">
+                <number>255</number>
+               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -977,6 +993,9 @@
             <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="10,1">
              <item>
               <widget class="QSlider" name="slider_saturation_min">
+               <property name="maximum">
+                <number>255</number>
+               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -995,6 +1014,9 @@
             <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="10,1">
              <item>
               <widget class="QSlider" name="slider_value_min">
+               <property name="maximum">
+                <number>255</number>
+               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -1017,6 +1039,9 @@
             <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="10,1">
              <item>
               <widget class="QSlider" name="slider_hue_max">
+               <property name="maximum">
+                <number>255</number>
+               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -1035,6 +1060,9 @@
             <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="10,1">
              <item>
               <widget class="QSlider" name="slider_saturation_max">
+               <property name="maximum">
+                <number>255</number>
+               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -1053,6 +1081,9 @@
             <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="10,1">
              <item>
               <widget class="QSlider" name="slider_value_max">
+               <property name="maximum">
+                <number>255</number>
+               </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>

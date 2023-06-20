@@ -1,13 +1,20 @@
+import json
+
 import cv2
 import numpy as np
 from PyQt5 import Qt
 from PyQt5.QtCore import QTimer, Qt, QThread, pyqtSignal, pyqtSlot, QSize, QMutex
 from PyQt5.QtGui import QColor, QImage, QPixmap, QPainter, QPen, QFont
-from PyQt5.QtWidgets import QApplication, QTableWidgetItem
+from PyQt5.QtWidgets import QApplication, QTableWidgetItem, QLabel
 
 from Codebase.Camera_Detection.PointsController import PointsController
 from Codebase.GUI.GeneratedDesign.mainWindow import *
 
+MIN = 0
+MAX = 1
+HUE = 0
+SATURATION = 1
+VALUE = 2
 
 class CameraThread(QThread):
     frame_ready = pyqtSignal(QImage)
@@ -83,6 +90,7 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent=parent)
         self.setupUi(self)
+        self.load_color_intervals()
         self.setup_cube_projection()
         self.main_cam.setFixedSize(QSize(310, 245))
         self.main_cam_2.setFixedSize(QSize(310, 245))
@@ -110,6 +118,14 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         pixmap = pixmap.scaled(self.main_cam_2.width(), self.main_cam_2.height())
         self.main_cam_2.setPixmap(pixmap)
 
+    def load_color_intervals(self):
+        with open("./Common/color_intervals.json", 'r') as json_file:
+            self.color_ranges = json.load(json_file)
+
+    def write_color_intervals_to_file(self):
+        with open("./Common/color_intervals.json", 'w') as json_file:
+            json.dump(self.color_ranges, json_file)
+
     def connect_events(self):
         self.start_camera.hide()
         self.start_camera_2.hide()
@@ -117,6 +133,8 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label_warning_faces.setFont(QFont("Arial", 12, QFont.Bold))
         self.label_warning_faces.setStyleSheet("color: red;")
         self.label_warning_faces.hide()
+
+        # Centers detection & Table stuff
         self.checkBox_detect_centers.stateChanged.connect(self.toggle_centers_detection)
         self.comboBox_up_color.currentIndexChanged.connect(self.check_centers_detection)
         self.comboBox_front_color.currentIndexChanged.connect(self.check_centers_detection)
@@ -131,8 +149,20 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.button_update_coordinate_file.clicked.connect(self.points_controller.update_file)
         self.tableWidget.itemChanged.connect(self.update_coordinates_from_table_update)
         self.button_detect_all_colors.clicked.connect(self.detect_colors_method)
+
+        # HSV
         self.checkBox_edit_color_intervals.stateChanged.connect(self.toggle_hsv_detection)
         self.comboBox_colors_HSV.currentIndexChanged.connect(self.change_hsv_filter)
+        self.slider_hue_min.valueChanged.connect(lambda: self.update_color_intervals_and_label_from_slider(MIN, HUE, self.slider_hue_min.value(), self.hue_min))
+        self.slider_hue_max.valueChanged.connect(lambda: self.hue_max.setText(str(self.slider_hue_max.value())))
+        self.slider_saturation_min.valueChanged.connect(
+            lambda: self.saturation_min.setText(str(self.slider_saturation_min.value())))
+        self.slider_saturation_max.valueChanged.connect(
+            lambda: self.saturation_max.setText(str(self.slider_saturation_max.value())))
+        self.slider_value_min.valueChanged.connect(lambda: self.value_min.setText(str(self.slider_value_min.value())))
+        self.slider_value_max.valueChanged.connect(lambda: self.value_max.setText(str(self.slider_value_max.value())))
+        self.button_save_hsv_to_file.clicked.connect(self.write_color_intervals_to_file)
+        # Cameras
         self.cap.frame_ready.connect(self.update_frame)
         self.cap.start()
         self.cap2.frame_ready.connect(self.update_frame_2)
@@ -199,9 +229,22 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def change_hsv_filter(self):
         color = self.comboBox_colors_HSV.currentText().lower()
+
+        self.slider_hue_min.setValue(self.color_ranges[color][MIN][HUE])
+        self.slider_hue_max.setValue(self.color_ranges[color][MAX][HUE])
+        self.slider_saturation_min.setValue(self.color_ranges[color][MIN][SATURATION])
+        self.slider_saturation_max.setValue(self.color_ranges[color][MAX][SATURATION])
+        self.slider_value_min.setValue(self.color_ranges[color][MIN][VALUE])
+        self.slider_value_max.setValue(self.color_ranges[color][MAX][VALUE])
+
         self.cap.set_apply_filter(True, self.color_ranges[color][0], self.color_ranges[color][1])
         self.cap2.set_apply_filter(True, self.color_ranges[color][0], self.color_ranges[color][1])
 
+    def update_color_intervals_and_label_from_slider(self, min_max, hsv, value, label: QLabel):
+        color = self.comboBox_colors_HSV.currentText().lower()
+        self.color_ranges[color][min_max][hsv] = value
+        label.setText(str(value))
+        self.change_hsv_filter()
 
     def check_centers_detection(self):
         W, O, G, R, B, Y = 'W', 'O', 'G', 'R', 'B', 'Y'
