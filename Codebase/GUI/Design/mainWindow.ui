@@ -9,1129 +9,1573 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1198</width>
-    <height>610</height>
+    <width>1143</width>
+    <height>660</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>650</width>
-      <height>561</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2" stretch="10,1,0,0,0,0,0">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetMinimumSize</enum>
-     </property>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetFixedSize</enum>
+   <layout class="QVBoxLayout" name="verticalLayout_10">
+    <item>
+     <widget class="QFrame" name="frame_top_bar">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>35</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>35</height>
+       </size>
+      </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(181, 181, 181);</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_18">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
        </property>
        <item>
-        <widget class="QLabel" name="main_cam">
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
+        <widget class="QFrame" name="frame_toggle">
+         <property name="maximumSize">
+          <size>
+           <width>70</width>
+           <height>35</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(0, 170, 255);</string>
          </property>
          <property name="frameShape">
-          <enum>QFrame::Box</enum>
+          <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
+          <enum>QFrame::Raised</enum>
          </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-         <property name="textFormat">
-          <enum>Qt::PlainText</enum>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_19">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="button_toggle_left_menu">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">border:0px solid</string>
+            </property>
+            <property name="text">
+             <string>Toggle</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="main_cam_2">
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
+        <widget class="QFrame" name="frame_top">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="frame_content">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_20">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QFrame" name="frame_left_menu">
+         <property name="maximumSize">
+          <size>
+           <width>70</width>
+           <height>16777215</height>
+          </size>
          </property>
          <property name="frameShape">
-          <enum>QFrame::Box</enum>
+          <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
+          <enum>QFrame::Raised</enum>
          </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-         <property name="textFormat">
-          <enum>Qt::PlainText</enum>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Cam 1 (Up, Left, Front)</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Cam 2 ( Right, Back, Down)</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,0,2,1,1">
-       <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="start_camera">
-         <property name="text">
-          <string>Start Camera</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="start_camera_2">
-         <property name="text">
-          <string>Start Camera</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_6">
-       <item>
-        <widget class="QCheckBox" name="checkBox_detect_centers">
-         <property name="text">
-          <string>Detect Centers</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_5">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,3,3">
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Up Color</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QComboBox" name="comboBox_up_color">
-         <item>
-          <property name="text">
-           <string>White</string>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <property name="spacing">
+           <number>0</number>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Orange</string>
+          <property name="leftMargin">
+           <number>0</number>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Green</string>
+          <property name="topMargin">
+           <number>0</number>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Red</string>
+          <property name="rightMargin">
+           <number>0</number>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Blue</string>
+          <property name="bottomMargin">
+           <number>0</number>
           </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Yellow</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Front Color</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QComboBox" name="comboBox_front_color">
-         <item>
-          <property name="text">
-           <string>Green</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>White</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Orange</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Red</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Blue</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Yellow</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QLabel" name="label_warning_faces">
-         <property name="text">
-          <string>Warning</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QPushButton" name="button_detect_all_colors">
-       <property name="text">
-        <string>Detect All Colors</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="3,5">
-       <item>
-        <layout class="QGridLayout" name="gridLayout">
-         <property name="sizeConstraint">
-          <enum>QLayout::SetMaximumSize</enum>
-         </property>
-         <property name="spacing">
-          <number>2</number>
-         </property>
-         <item row="1" column="0">
-          <layout class="QGridLayout" name="grid_orange">
-           <property name="sizeConstraint">
-            <enum>QLayout::SetDefaultConstraint</enum>
-           </property>
-           <item row="1" column="1">
-            <widget class="QLabel" name="o5">
-             <property name="text">
-              <string>O5</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="o2">
-             <property name="text">
-              <string>O2</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QLabel" name="o3">
-             <property name="text">
-              <string>O3</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="o4">
-             <property name="text">
-              <string>O4</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="o1">
-             <property name="text">
-              <string>O1</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QLabel" name="o6">
-             <property name="text">
-              <string>O6</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="o7">
-             <property name="text">
-              <string>O7</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="o8">
-             <property name="text">
-              <string>O8</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QLabel" name="o9">
-             <property name="text">
-              <string>O9</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="1" column="3">
-          <layout class="QGridLayout" name="grid_blue">
-           <property name="sizeConstraint">
-            <enum>QLayout::SetDefaultConstraint</enum>
-           </property>
-           <item row="1" column="2">
-            <widget class="QLabel" name="b6">
-             <property name="text">
-              <string>B6</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="b1">
-             <property name="text">
-              <string>B1</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="b4">
-             <property name="text">
-              <string>B4</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="b2">
-             <property name="text">
-              <string>B2</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="b5">
-             <property name="text">
-              <string>B5</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QLabel" name="b3">
-             <property name="text">
-              <string>B3</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="b7">
-             <property name="text">
-              <string>B7</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="b8">
-             <property name="text">
-              <string>B8</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QLabel" name="b9">
-             <property name="text">
-              <string>B9</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="1" column="1">
-          <layout class="QGridLayout" name="grid_green">
-           <property name="sizeConstraint">
-            <enum>QLayout::SetDefaultConstraint</enum>
-           </property>
-           <item row="0" column="0">
-            <widget class="QLabel" name="g1">
-             <property name="text">
-              <string>G1</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QLabel" name="g3">
-             <property name="text">
-              <string>G3</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="g2">
-             <property name="text">
-              <string>G2</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="g4">
-             <property name="text">
-              <string>G4</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="g5">
-             <property name="text">
-              <string>G5</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QLabel" name="g6">
-             <property name="text">
-              <string>G6</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="g7">
-             <property name="text">
-              <string>G7</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="g8">
-             <property name="text">
-              <string>G8</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QLabel" name="g9">
-             <property name="text">
-              <string>G9</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="1" column="2">
-          <layout class="QGridLayout" name="grid_red">
-           <property name="sizeConstraint">
-            <enum>QLayout::SetDefaultConstraint</enum>
-           </property>
-           <item row="0" column="0">
-            <widget class="QLabel" name="r1">
-             <property name="text">
-              <string>R1</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QLabel" name="r3">
-             <property name="text">
-              <string>R3</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="r2">
-             <property name="text">
-              <string>R2</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="r4">
-             <property name="text">
-              <string>R4</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="r5">
-             <property name="text">
-              <string>R5</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QLabel" name="r6">
-             <property name="text">
-              <string>R6</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="r7">
-             <property name="text">
-              <string>R7</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="r8">
-             <property name="text">
-              <string>R8</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QLabel" name="r9">
-             <property name="text">
-              <string>R9</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="0" column="1">
-          <layout class="QGridLayout" name="grid_white">
-           <property name="sizeConstraint">
-            <enum>QLayout::SetDefaultConstraint</enum>
-           </property>
-           <item row="0" column="0">
-            <widget class="QLabel" name="w1">
-             <property name="text">
-              <string>W1</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QLabel" name="w3">
-             <property name="text">
-              <string>W3</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="w2">
-             <property name="text">
-              <string>W2</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="w4">
-             <property name="text">
-              <string>W4</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="w5">
-             <property name="text">
-              <string>W5</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QLabel" name="w6">
-             <property name="text">
-              <string>W6</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="w7">
-             <property name="text">
-              <string>W7</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="w8">
-             <property name="text">
-              <string>W8</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QLabel" name="w9">
-             <property name="text">
-              <string>W9</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="2" column="1">
-          <layout class="QGridLayout" name="grid_yellow">
-           <property name="sizeConstraint">
-            <enum>QLayout::SetDefaultConstraint</enum>
-           </property>
-           <item row="0" column="0">
-            <widget class="QLabel" name="y1">
-             <property name="text">
-              <string>Y1</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QLabel" name="y3">
-             <property name="text">
-              <string>Y3</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="y2">
-             <property name="text">
-              <string>Y2</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="y4">
-             <property name="text">
-              <string>Y4</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="y5">
-             <property name="text">
-              <string>Y5</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QLabel" name="y6">
-             <property name="text">
-              <string>Y6</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="y7">
-             <property name="text">
-              <string>Y7</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="y8">
-             <property name="text">
-              <string>Y8</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QLabel" name="y9">
-             <property name="text">
-              <string>Y9</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_6">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>100</width>
-           <height>1</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="verticalLayoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>690</x>
-      <y>20</y>
-      <width>486</width>
-      <height>561</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_6" stretch="20,1,1">
-     <item>
-      <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0">
-       <item>
-        <widget class="QTableWidget" name="tableWidget">
-         <column>
-          <property name="text">
-           <string>Face</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Index</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>X</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Y</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Color</string>
-          </property>
-         </column>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QPushButton" name="button_update_table_up">
-           <property name="text">
-            <string>Up</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="button_update_table_left">
-           <property name="text">
-            <string>Left</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="button_update_table_front">
-           <property name="text">
-            <string>Front</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="button_update_table_right">
-           <property name="text">
-            <string>Right</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="button_update_table_back">
-           <property name="text">
-            <string>Back</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="button_update_table_down">
-           <property name="text">
-            <string>Down</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_8">
-         <item>
-          <widget class="QPushButton" name="button_display_all_points">
-           <property name="text">
-            <string>Display all points</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="button_clear_all_points">
-           <property name="text">
-            <string>Clear all points</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="button_update_coordinate_file">
-           <property name="text">
-            <string>Save Coordinates to File</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>88</width>
-         <height>108</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="layout_edit_colors">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_9">
-         <item>
-          <widget class="QCheckBox" name="checkBox_edit_color_intervals">
-           <property name="text">
-            <string>Edit Color Intervals</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="comboBox_colors_HSV">
-           <item>
-            <property name="text">
-             <string>White</string>
+          <item>
+           <widget class="QFrame" name="frame_left_buttons">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
             </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Orange</string>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
             </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Green</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Red</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Blue</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Yellow</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_8">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_10">
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
-           <item>
-            <widget class="QLabel" name="label_7">
-             <property name="text">
-              <string>Hue</string>
+            <layout class="QVBoxLayout" name="verticalLayout_8">
+             <property name="spacing">
+              <number>0</number>
              </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>Saturation</string>
+             <property name="leftMargin">
+              <number>0</number>
              </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_9">
-             <property name="text">
-              <string>Value</string>
+             <property name="topMargin">
+              <number>0</number>
              </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_4">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="10,1">
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
              <item>
-              <widget class="QSlider" name="slider_hue_min">
-               <property name="maximum">
-                <number>255</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+              <widget class="QPushButton" name="button_main_page">
+               <property name="text">
+                <string>Main</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="hue_min">
+              <widget class="QPushButton" name="button_debug_page">
                <property name="text">
-                <string>0</string>
+                <string>Debug</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_2">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="button_info_page">
+               <property name="text">
+                <string>Info</string>
                </property>
               </widget>
              </item>
             </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="10,1">
-             <item>
-              <widget class="QSlider" name="slider_saturation_min">
-               <property name="maximum">
-                <number>255</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="saturation_min">
-               <property name="text">
-                <string>0</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="10,1">
-             <item>
-              <widget class="QSlider" name="slider_value_min">
-               <property name="maximum">
-                <number>255</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="value_min">
-               <property name="text">
-                <string>0</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="10,1">
-             <item>
-              <widget class="QSlider" name="slider_hue_max">
-               <property name="maximum">
-                <number>255</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="hue_max">
-               <property name="text">
-                <string>0</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="10,1">
-             <item>
-              <widget class="QSlider" name="slider_saturation_max">
-               <property name="maximum">
-                <number>255</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="saturation_max">
-               <property name="text">
-                <string>0</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="10,1">
-             <item>
-              <widget class="QSlider" name="slider_value_max">
-               <property name="maximum">
-                <number>255</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="value_max">
-               <property name="text">
-                <string>0</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-        </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_17">
-         <item>
-          <spacer name="horizontalSpacer_7">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="button_save_hsv_to_file">
-           <property name="text">
-            <string>Save Config to File</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QFrame" name="frame_pages">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_22">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QStackedWidget" name="stackedWidget_content">
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <widget class="QWidget" name="page_solver">
+             <layout class="QVBoxLayout" name="verticalLayout_13">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_12">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_3">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <property name="sizeConstraint">
+                   <enum>QLayout::SetFixedSize</enum>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="main_cam">
+                    <property name="minimumSize">
+                     <size>
+                      <width>310</width>
+                      <height>245</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>310</width>
+                      <height>245</height>
+                     </size>
+                    </property>
+                    <property name="layoutDirection">
+                     <enum>Qt::LeftToRight</enum>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::Box</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Plain</enum>
+                    </property>
+                    <property name="text">
+                     <string>TextLabel</string>
+                    </property>
+                    <property name="textFormat">
+                     <enum>Qt::PlainText</enum>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="main_cam_2">
+                    <property name="minimumSize">
+                     <size>
+                      <width>310</width>
+                      <height>245</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>310</width>
+                      <height>245</height>
+                     </size>
+                    </property>
+                    <property name="layoutDirection">
+                     <enum>Qt::LeftToRight</enum>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::Box</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Plain</enum>
+                    </property>
+                    <property name="text">
+                     <string>TextLabel</string>
+                    </property>
+                    <property name="textFormat">
+                     <enum>Qt::PlainText</enum>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_4">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="label">
+                    <property name="text">
+                     <string>Cam 1 (Up, Left, Front)</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_2">
+                    <property name="text">
+                     <string>Cam 2 ( Right, Back, Down)</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_21">
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0">
+                    <property name="sizeConstraint">
+                     <enum>QLayout::SetMinimumSize</enum>
+                    </property>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_6">
+                      <item>
+                       <spacer name="horizontalSpacer_5">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0">
+                      <property name="leftMargin">
+                       <number>6</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>6</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>6</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>6</number>
+                      </property>
+                      <item row="2" column="0">
+                       <widget class="QComboBox" name="comboBox_front_color">
+                        <item>
+                         <property name="text">
+                          <string>Green</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>White</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Orange</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Red</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Blue</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Yellow</string>
+                         </property>
+                        </item>
+                       </widget>
+                      </item>
+                      <item row="1" column="0">
+                       <widget class="QComboBox" name="comboBox_up_color">
+                        <property name="maximumSize">
+                         <size>
+                          <width>75</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <item>
+                         <property name="text">
+                          <string>White</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Orange</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Green</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Red</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Blue</string>
+                         </property>
+                        </item>
+                        <item>
+                         <property name="text">
+                          <string>Yellow</string>
+                         </property>
+                        </item>
+                       </widget>
+                      </item>
+                      <item row="2" column="1">
+                       <widget class="QLabel" name="label_4">
+                        <property name="text">
+                         <string>Front Color</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="1" column="1">
+                       <widget class="QLabel" name="label_3">
+                        <property name="text">
+                         <string>Up Color</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="2" column="2">
+                       <widget class="QLabel" name="label_warning_faces">
+                        <property name="text">
+                         <string>Warning</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item row="0" column="0">
+                       <widget class="QCheckBox" name="checkBox_detect_centers">
+                        <property name="text">
+                         <string>Detect Centers</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="button_detect_all_colors">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
+                      <property name="layoutDirection">
+                       <enum>Qt::LeftToRight</enum>
+                      </property>
+                      <property name="text">
+                       <string>Detect All Colors</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="0,0,0">
+                      <item>
+                       <spacer name="horizontalSpacer_2">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                         <enum>QSizePolicy::Preferred</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>10</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item>
+                       <layout class="QGridLayout" name="gridLayout">
+                        <property name="sizeConstraint">
+                         <enum>QLayout::SetFixedSize</enum>
+                        </property>
+                        <property name="spacing">
+                         <number>2</number>
+                        </property>
+                        <item row="1" column="0">
+                         <layout class="QGridLayout" name="grid_orange">
+                          <property name="sizeConstraint">
+                           <enum>QLayout::SetDefaultConstraint</enum>
+                          </property>
+                          <item row="1" column="1">
+                           <widget class="QLabel" name="o5">
+                            <property name="text">
+                             <string>O5</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="1">
+                           <widget class="QLabel" name="o2">
+                            <property name="text">
+                             <string>O2</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="2">
+                           <widget class="QLabel" name="o3">
+                            <property name="text">
+                             <string>O3</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="0">
+                           <widget class="QLabel" name="o4">
+                            <property name="text">
+                             <string>O4</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="0">
+                           <widget class="QLabel" name="o1">
+                            <property name="text">
+                             <string>O1</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="2">
+                           <widget class="QLabel" name="o6">
+                            <property name="text">
+                             <string>O6</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="0">
+                           <widget class="QLabel" name="o7">
+                            <property name="text">
+                             <string>O7</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="1">
+                           <widget class="QLabel" name="o8">
+                            <property name="text">
+                             <string>O8</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="2">
+                           <widget class="QLabel" name="o9">
+                            <property name="text">
+                             <string>O9</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </item>
+                        <item row="1" column="3">
+                         <layout class="QGridLayout" name="grid_blue">
+                          <property name="sizeConstraint">
+                           <enum>QLayout::SetDefaultConstraint</enum>
+                          </property>
+                          <item row="1" column="2">
+                           <widget class="QLabel" name="b6">
+                            <property name="text">
+                             <string>B6</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="0">
+                           <widget class="QLabel" name="b1">
+                            <property name="text">
+                             <string>B1</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="0">
+                           <widget class="QLabel" name="b4">
+                            <property name="text">
+                             <string>B4</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="1">
+                           <widget class="QLabel" name="b2">
+                            <property name="text">
+                             <string>B2</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="1">
+                           <widget class="QLabel" name="b5">
+                            <property name="text">
+                             <string>B5</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="2">
+                           <widget class="QLabel" name="b3">
+                            <property name="text">
+                             <string>B3</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="0">
+                           <widget class="QLabel" name="b7">
+                            <property name="text">
+                             <string>B7</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="1">
+                           <widget class="QLabel" name="b8">
+                            <property name="text">
+                             <string>B8</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="2">
+                           <widget class="QLabel" name="b9">
+                            <property name="text">
+                             <string>B9</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </item>
+                        <item row="1" column="1">
+                         <layout class="QGridLayout" name="grid_green">
+                          <property name="sizeConstraint">
+                           <enum>QLayout::SetDefaultConstraint</enum>
+                          </property>
+                          <item row="0" column="0">
+                           <widget class="QLabel" name="g1">
+                            <property name="text">
+                             <string>G1</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="2">
+                           <widget class="QLabel" name="g3">
+                            <property name="text">
+                             <string>G3</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="1">
+                           <widget class="QLabel" name="g2">
+                            <property name="text">
+                             <string>G2</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="0">
+                           <widget class="QLabel" name="g4">
+                            <property name="text">
+                             <string>G4</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="1">
+                           <widget class="QLabel" name="g5">
+                            <property name="text">
+                             <string>G5</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="2">
+                           <widget class="QLabel" name="g6">
+                            <property name="text">
+                             <string>G6</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="0">
+                           <widget class="QLabel" name="g7">
+                            <property name="text">
+                             <string>G7</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="1">
+                           <widget class="QLabel" name="g8">
+                            <property name="text">
+                             <string>G8</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="2">
+                           <widget class="QLabel" name="g9">
+                            <property name="text">
+                             <string>G9</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </item>
+                        <item row="1" column="2">
+                         <layout class="QGridLayout" name="grid_red">
+                          <property name="sizeConstraint">
+                           <enum>QLayout::SetDefaultConstraint</enum>
+                          </property>
+                          <item row="0" column="0">
+                           <widget class="QLabel" name="r1">
+                            <property name="text">
+                             <string>R1</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="2">
+                           <widget class="QLabel" name="r3">
+                            <property name="text">
+                             <string>R3</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="1">
+                           <widget class="QLabel" name="r2">
+                            <property name="text">
+                             <string>R2</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="0">
+                           <widget class="QLabel" name="r4">
+                            <property name="text">
+                             <string>R4</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="1">
+                           <widget class="QLabel" name="r5">
+                            <property name="text">
+                             <string>R5</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="2">
+                           <widget class="QLabel" name="r6">
+                            <property name="text">
+                             <string>R6</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="0">
+                           <widget class="QLabel" name="r7">
+                            <property name="text">
+                             <string>R7</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="1">
+                           <widget class="QLabel" name="r8">
+                            <property name="text">
+                             <string>R8</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="2">
+                           <widget class="QLabel" name="r9">
+                            <property name="text">
+                             <string>R9</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </item>
+                        <item row="0" column="1">
+                         <layout class="QGridLayout" name="grid_white">
+                          <property name="sizeConstraint">
+                           <enum>QLayout::SetDefaultConstraint</enum>
+                          </property>
+                          <item row="0" column="0">
+                           <widget class="QLabel" name="w1">
+                            <property name="text">
+                             <string>W1</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="2">
+                           <widget class="QLabel" name="w3">
+                            <property name="text">
+                             <string>W3</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="1">
+                           <widget class="QLabel" name="w2">
+                            <property name="text">
+                             <string>W2</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="0">
+                           <widget class="QLabel" name="w4">
+                            <property name="text">
+                             <string>W4</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="1">
+                           <widget class="QLabel" name="w5">
+                            <property name="text">
+                             <string>W5</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="2">
+                           <widget class="QLabel" name="w6">
+                            <property name="text">
+                             <string>W6</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="0">
+                           <widget class="QLabel" name="w7">
+                            <property name="text">
+                             <string>W7</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="1">
+                           <widget class="QLabel" name="w8">
+                            <property name="text">
+                             <string>W8</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="2">
+                           <widget class="QLabel" name="w9">
+                            <property name="text">
+                             <string>W9</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </item>
+                        <item row="2" column="1">
+                         <layout class="QGridLayout" name="grid_yellow">
+                          <property name="sizeConstraint">
+                           <enum>QLayout::SetDefaultConstraint</enum>
+                          </property>
+                          <item row="0" column="0">
+                           <widget class="QLabel" name="y1">
+                            <property name="text">
+                             <string>Y1</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="2">
+                           <widget class="QLabel" name="y3">
+                            <property name="text">
+                             <string>Y3</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="1">
+                           <widget class="QLabel" name="y2">
+                            <property name="text">
+                             <string>Y2</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="0">
+                           <widget class="QLabel" name="y4">
+                            <property name="text">
+                             <string>Y4</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="1">
+                           <widget class="QLabel" name="y5">
+                            <property name="text">
+                             <string>Y5</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="1" column="2">
+                           <widget class="QLabel" name="y6">
+                            <property name="text">
+                             <string>Y6</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="0">
+                           <widget class="QLabel" name="y7">
+                            <property name="text">
+                             <string>Y7</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="1">
+                           <widget class="QLabel" name="y8">
+                            <property name="text">
+                             <string>Y8</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="2" column="2">
+                           <widget class="QLabel" name="y9">
+                            <property name="text">
+                             <string>Y9</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer_6">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                         <enum>QSizePolicy::Preferred</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>50</width>
+                          <height>1</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_6">
+                    <item>
+                     <widget class="QLabel" name="label_5">
+                      <property name="text">
+                       <string>CFOP Solution</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPlainTextEdit" name="plainTextEdit"/>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="button_solve">
+                      <property name="text">
+                       <string>SOLVE</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="page_debug">
+             <layout class="QVBoxLayout" name="verticalLayout_9">
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_11">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_5">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="main_cam_debug_3">
+                    <property name="minimumSize">
+                     <size>
+                      <width>310</width>
+                      <height>245</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>310</width>
+                      <height>245</height>
+                     </size>
+                    </property>
+                    <property name="layoutDirection">
+                     <enum>Qt::LeftToRight</enum>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::Box</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Plain</enum>
+                    </property>
+                    <property name="text">
+                     <string>TextLabel</string>
+                    </property>
+                    <property name="textFormat">
+                     <enum>Qt::PlainText</enum>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="main_cam_debug_4">
+                    <property name="minimumSize">
+                     <size>
+                      <width>310</width>
+                      <height>245</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>310</width>
+                      <height>245</height>
+                     </size>
+                    </property>
+                    <property name="layoutDirection">
+                     <enum>Qt::LeftToRight</enum>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::Box</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Plain</enum>
+                    </property>
+                    <property name="text">
+                     <string>TextLabel</string>
+                    </property>
+                    <property name="textFormat">
+                     <enum>Qt::PlainText</enum>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_23">
+                  <item>
+                   <widget class="QLabel" name="label_10">
+                    <property name="text">
+                     <string>Cam 1 (Up, Left, Front)</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_6">
+                    <property name="text">
+                     <string>Cam 2 ( Right, Back, Down)</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_24" stretch="1,1">
+                <item>
+                 <layout class="QVBoxLayout" name="layout_edit_colors">
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_9">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QCheckBox" name="checkBox_edit_color_intervals">
+                      <property name="text">
+                       <string>Edit Color Intervals</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QComboBox" name="comboBox_colors_HSV">
+                      <item>
+                       <property name="text">
+                        <string>White</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Orange</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Green</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Red</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Blue</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>Yellow</string>
+                       </property>
+                      </item>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="horizontalSpacer_8">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_10">
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_3">
+                      <item>
+                       <widget class="QLabel" name="label_7">
+                        <property name="text">
+                         <string>Hue</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_8">
+                        <property name="text">
+                         <string>Saturation</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QLabel" name="label_9">
+                        <property name="text">
+                         <string>Value</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_4">
+                      <item>
+                       <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="10,1">
+                        <item>
+                         <widget class="QSlider" name="slider_hue_min">
+                          <property name="minimumSize">
+                           <size>
+                            <width>140</width>
+                            <height>0</height>
+                           </size>
+                          </property>
+                          <property name="maximum">
+                           <number>255</number>
+                          </property>
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="hue_min">
+                          <property name="text">
+                           <string>0</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="10,1">
+                        <item>
+                         <widget class="QSlider" name="slider_saturation_min">
+                          <property name="maximum">
+                           <number>255</number>
+                          </property>
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="saturation_min">
+                          <property name="text">
+                           <string>0</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="10,1">
+                        <item>
+                         <widget class="QSlider" name="slider_value_min">
+                          <property name="maximum">
+                           <number>255</number>
+                          </property>
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="value_min">
+                          <property name="text">
+                           <string>0</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QVBoxLayout" name="verticalLayout_5">
+                      <item>
+                       <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="10,1">
+                        <item>
+                         <widget class="QSlider" name="slider_hue_max">
+                          <property name="minimumSize">
+                           <size>
+                            <width>140</width>
+                            <height>0</height>
+                           </size>
+                          </property>
+                          <property name="maximum">
+                           <number>255</number>
+                          </property>
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="hue_max">
+                          <property name="text">
+                           <string>0</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <layout class="QHBoxLayout" name="horizontalLayout_15" stretch="10,1">
+                        <item>
+                         <widget class="QSlider" name="slider_saturation_max">
+                          <property name="maximum">
+                           <number>255</number>
+                          </property>
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="saturation_max">
+                          <property name="text">
+                           <string>0</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                      <item>
+                       <layout class="QHBoxLayout" name="horizontalLayout_16" stretch="10,1">
+                        <item>
+                         <widget class="QSlider" name="slider_value_max">
+                          <property name="maximum">
+                           <number>255</number>
+                          </property>
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <widget class="QLabel" name="value_max">
+                          <property name="text">
+                           <string>0</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_17">
+                    <item>
+                     <spacer name="horizontalSpacer_7">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="button_save_hsv_to_file">
+                      <property name="text">
+                       <string>Save Config to File</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0">
+                  <item>
+                   <widget class="QTableWidget" name="tableWidget">
+                    <property name="minimumSize">
+                     <size>
+                      <width>502</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <column>
+                     <property name="text">
+                      <string>Face</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Index</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>X</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Y</string>
+                     </property>
+                    </column>
+                    <column>
+                     <property name="text">
+                      <string>Color</string>
+                     </property>
+                    </column>
+                   </widget>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout">
+                    <item>
+                     <widget class="QPushButton" name="button_update_table_up">
+                      <property name="text">
+                       <string>Up</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="button_update_table_left">
+                      <property name="text">
+                       <string>Left</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="button_update_table_front">
+                      <property name="text">
+                       <string>Front</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="button_update_table_right">
+                      <property name="text">
+                       <string>Right</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="button_update_table_back">
+                      <property name="text">
+                       <string>Back</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="button_update_table_down">
+                      <property name="text">
+                       <string>Down</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_8">
+                    <item>
+                     <widget class="QPushButton" name="button_display_all_points">
+                      <property name="text">
+                       <string>Display all points</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="button_clear_all_points">
+                      <property name="text">
+                       <string>Clear all points</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_2">
+                    <item>
+                     <spacer name="horizontalSpacer">
+                      <property name="orientation">
+                       <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>40</width>
+                        <height>20</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                    <item>
+                     <widget class="QPushButton" name="button_update_coordinate_file">
+                      <property name="text">
+                       <string>Save Coordinates to File</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
-     </item>
-    </layout>
-   </widget>
+     </widget>
+    </item>
+   </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
   <include location="pixels.qrc"/>

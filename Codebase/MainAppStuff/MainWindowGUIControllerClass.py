@@ -15,6 +15,8 @@ MAX = 1
 HUE = 0
 SATURATION = 1
 VALUE = 2
+MAIN_PAGE = 0
+DEBUG_PAGE = 1
 
 class CameraThread(QThread):
     frame_ready = pyqtSignal(QImage)
@@ -110,13 +112,19 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
     def update_frame(self, q_image):
         pixmap = QPixmap.fromImage(q_image)
         pixmap = pixmap.scaled(self.main_cam.width(), self.main_cam.height())
-        self.main_cam.setPixmap(pixmap)
+        if self.main_cam.isVisible():
+            self.main_cam.setPixmap(pixmap)
+        elif self.main_cam_debug_3.isVisible():
+            self.main_cam_debug_3.setPixmap(pixmap)
 
     @pyqtSlot(QImage)
     def update_frame_2(self, q_image):
         pixmap = QPixmap.fromImage(q_image)
         pixmap = pixmap.scaled(self.main_cam_2.width(), self.main_cam_2.height())
-        self.main_cam_2.setPixmap(pixmap)
+        if self.main_cam_2.isVisible():
+            self.main_cam_2.setPixmap(pixmap)
+        elif self.main_cam_debug_4.isVisible():
+            self.main_cam_debug_4.setPixmap(pixmap)
 
     def load_color_intervals(self):
         with open("./Common/color_intervals.json", 'r') as json_file:
@@ -127,13 +135,37 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
             json.dump(self.color_ranges, json_file)
 
     def connect_events(self):
-        self.start_camera.hide()
-        self.start_camera_2.hide()
         self.label_warning_faces.setText("Invalid centers configuration!")
         self.label_warning_faces.setFont(QFont("Arial", 12, QFont.Bold))
         self.label_warning_faces.setStyleSheet("color: red;")
         self.label_warning_faces.hide()
 
+        # Pages buttons
+        self.button_main_page.clicked.connect(lambda: self.stackedWidget_content.setCurrentIndex(MAIN_PAGE))
+        self.button_debug_page.clicked.connect(lambda: self.stackedWidget_content.setCurrentIndex(DEBUG_PAGE))
+
+        # heh nice sizing hack
+        size = QSize(20, 20)
+        self.o4.setFixedSize(size)
+        self.o5.setFixedSize(size)
+        self.o6.setFixedSize(size)
+        self.g4.setFixedSize(size)
+        self.g5.setFixedSize(size)
+        self.g6.setFixedSize(size)
+        self.r4.setFixedSize(size)
+        self.r5.setFixedSize(size)
+        self.r6.setFixedSize(size)
+        self.b4.setFixedSize(size)
+        self.b5.setFixedSize(size)
+        self.b6.setFixedSize(size)
+        self.w2.setFixedSize(size)
+        self.w5.setFixedSize(size)
+        self.w8.setFixedSize(size)
+        self.g2.setFixedSize(size)
+        self.g8.setFixedSize(size)
+        self.y2.setFixedSize(size)
+        self.y5.setFixedSize(size)
+        self.y8.setFixedSize(size)
         # Centers detection & Table stuff
         self.checkBox_detect_centers.stateChanged.connect(self.toggle_centers_detection)
         self.comboBox_up_color.currentIndexChanged.connect(self.check_centers_detection)
@@ -154,13 +186,12 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.checkBox_edit_color_intervals.stateChanged.connect(self.toggle_hsv_detection)
         self.comboBox_colors_HSV.currentIndexChanged.connect(self.change_hsv_filter)
         self.slider_hue_min.valueChanged.connect(lambda: self.update_color_intervals_and_label_from_slider(MIN, HUE, self.slider_hue_min.value(), self.hue_min))
-        self.slider_hue_max.valueChanged.connect(lambda: self.hue_max.setText(str(self.slider_hue_max.value())))
-        self.slider_saturation_min.valueChanged.connect(
-            lambda: self.saturation_min.setText(str(self.slider_saturation_min.value())))
+        self.slider_hue_max.valueChanged.connect(lambda: self.update_color_intervals_and_label_from_slider(MAX, HUE, self.slider_hue_max.value(), self.hue_max))
+        self.slider_saturation_min.valueChanged.connect(lambda: self.update_color_intervals_and_label_from_slider(MIN, SATURATION, self.slider_saturation_min.value(), self.saturation_min))
         self.slider_saturation_max.valueChanged.connect(
-            lambda: self.saturation_max.setText(str(self.slider_saturation_max.value())))
-        self.slider_value_min.valueChanged.connect(lambda: self.value_min.setText(str(self.slider_value_min.value())))
-        self.slider_value_max.valueChanged.connect(lambda: self.value_max.setText(str(self.slider_value_max.value())))
+            lambda: self.update_color_intervals_and_label_from_slider(MAX, SATURATION, self.slider_saturation_max.value(), self.saturation_max))
+        self.slider_value_min.valueChanged.connect(lambda: self.update_color_intervals_and_label_from_slider(MIN, VALUE, self.slider_value_min.value(), self.value_min))
+        self.slider_value_max.valueChanged.connect(lambda: self.update_color_intervals_and_label_from_slider(MAX, VALUE, self.slider_value_max.value(), self.value_max))
         self.button_save_hsv_to_file.clicked.connect(self.write_color_intervals_to_file)
         # Cameras
         self.cap.frame_ready.connect(self.update_frame)
