@@ -147,21 +147,19 @@ class Cube:
     @staticmethod
     def format_alg_to_turns(alg: str):
         # Separates each move, taking into
-        result = []
         prev = ''
-        for char in alg:
-            if char == ' ':
-                continue
-            if char in ['\'', '2']:
-                result.append(prev + char)
-                prev = ''
-            else:
-                if prev:
-                    result.append(prev)
-                prev = char
-        if prev:
-            result.append(prev)
-        return result
+        alg_split = alg.split()
+        turns = []
+        for move in alg_split:
+            face = move[0]
+            direction = 'cw'
+            if len(move) > 1:
+                if move[1] == '2':
+                    direction = 'dt'
+                elif move[1] == "'":
+                    direction = 'ccw'
+            turns.append((face, direction))
+        return turns
 
     @staticmethod
     def format_turns_to_alg(alg: list):

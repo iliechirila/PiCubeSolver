@@ -31,6 +31,7 @@ class MotorsController:
             rotation_pol = GPIO.LOW
         elif rot_type == "ccw":
             rotation_pol = GPIO.HIGH
+
         GPIO.output(ENABLE, rotation_pol)
         GPIO.output(DIR, rotation_pol)
         for i in range(self.rot_steps[rot_type]):
@@ -39,3 +40,8 @@ class MotorsController:
             time.sleep(delay)
             GPIO.output(STEP, GPIO.LOW)
             time.sleep(delay)
+        GPIO.output(ENABLE, GPIO.HIGH)
+
+    def solve_cube(self, solution_tuples: list, rpm: int):
+        for move in solution_tuples:
+            self.command_stepper(move, RPM=rpm)

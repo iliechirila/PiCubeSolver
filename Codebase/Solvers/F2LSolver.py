@@ -93,7 +93,7 @@ class F2LSolver(BaseSolver):
         f2l_key = [cubie_key(f2l_pair),
                    cubie_key(f2l_pair + self.d_color)]
         slot_coord = tuple(self.goal_config[f2l_key[0]][0])
-        print(slot_coord)
+        # print(slot_coord)
         fn = F2LNode(self.init_config, self.goal_config, [],
                      self.d_color, [], slot_coord)
 
@@ -130,7 +130,7 @@ class F2LSolver(BaseSolver):
             # check next if perm hasn't already been found
             for turn in turn_space_current:
                 self.index += 1
-                print(self.index, current.abs_h_cost, current.did_slot_turn, current.alg)
+                # print(self.index, current.abs_h_cost, current.did_slot_turn, current.alg)
                 new_perm = current.apply_turn(turn)
                 # new_perm = {cubie_key(color): (list(coord), color)
                 #               for coord, color in new_perm.items()}

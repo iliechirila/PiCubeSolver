@@ -1,14 +1,18 @@
 import json
+import time
 
 import cv2
 import numpy as np
 from PyQt5 import Qt
 from PyQt5.QtCore import QTimer, Qt, QThread, pyqtSignal, pyqtSlot, QSize, QMutex
 from PyQt5.QtGui import QColor, QImage, QPixmap, QPainter, QPen, QFont
-from PyQt5.QtWidgets import QApplication, QTableWidgetItem, QLabel
+from PyQt5.QtWidgets import QApplication, QTableWidgetItem, QLabel, QDialog, QVBoxLayout
 
 from Codebase.Camera_Detection.PointsController import PointsController
+from Codebase.Common.Cube import Cube
 from Codebase.GUI.GeneratedDesign.mainWindow import *
+# from Codebase.Motors.MotorsController import MotorsController
+from Codebase.Solvers.Solver import Solver
 
 MIN = 0
 MAX = 1
@@ -78,6 +82,34 @@ class CameraThread(QThread):
 
                 self.frame_ready.emit(q_image)
 
+class SolverThread(QThread):
+    solution_found = pyqtSignal(str, str, list)
+
+    def __init__(self, solver):
+        super().__init__()
+        self.solver = solver
+
+    def run(self):
+        start_time = time.time()
+        solution_formatted, solution_std, solution_tuples = self.solver.solve_cube()
+        self.solution_found.emit(solution_formatted, solution_std, solution_tuples)
+        print(time.time()-start_time)
+
+class LoadingWindow(QDialog):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("Loading")
+        self.setFixedSize(200, 100)
+
+        layout = QVBoxLayout()
+
+        label = QLabel("Finding solution...")
+        label.setAlignment(Qt.AlignCenter)
+
+        layout.addWidget(label)
+        self.setLayout(layout)
+
 
 class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
     color_ranges = {
@@ -92,12 +124,21 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent=parent)
         self.setupUi(self)
+        self.frame_top_bar.hide()
         self.load_color_intervals()
         self.setup_cube_projection()
         self.main_cam.setFixedSize(QSize(310, 245))
         self.main_cam_2.setFixedSize(QSize(310, 245))
         self.cap = CameraThread("Cam1", 0, [])
         self.cap2 = CameraThread("Cam2", 1, [])
+        self.solver = Solver()
+        self.loading_window = LoadingWindow()
+        self.cube_list = []
+        self.solution_std = ''
+        self.solution_tuple = []
+        self.rpm = 30
+        self.slider_rpm.setValue(30)
+        # self.motors_controller = MotorsController()
         self.center_colors = ['w', 'o', 'g', 'r', 'b', 'y']
         self.current_table_face = None
         self.aspect_ratio = 1280 / 720
@@ -108,6 +149,16 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.update_table_values()
         print("Created Main Window GUI in Controller")
 
+    def change_rpm(self):
+        self.rpm = int(self.slider_rpm.value())
+        self.label_rpm.setText(str(self.rpm))
+
+    # def setup_motors_pins(self):
+    #     self.motors_controller.add_pins_configuration("U",1,1,1)
+    #
+    # def solve_with_motor(self):
+    #     self.motors_controller.solve_cube(self.solution_tuple, self.rpm)
+    #
     @pyqtSlot(QImage)
     def update_frame(self, q_image):
         pixmap = QPixmap.fromImage(q_image)
@@ -135,6 +186,9 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
             json.dump(self.color_ranges, json_file)
 
     def connect_events(self):
+        #rpm
+        self.slider_rpm.valueChanged.connect(self.change_rpm)
+
         self.label_warning_faces.setText("Invalid centers configuration!")
         self.label_warning_faces.setFont(QFont("Arial", 12, QFont.Bold))
         self.label_warning_faces.setStyleSheet("color: red;")
@@ -193,11 +247,14 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.slider_value_min.valueChanged.connect(lambda: self.update_color_intervals_and_label_from_slider(MIN, VALUE, self.slider_value_min.value(), self.value_min))
         self.slider_value_max.valueChanged.connect(lambda: self.update_color_intervals_and_label_from_slider(MAX, VALUE, self.slider_value_max.value(), self.value_max))
         self.button_save_hsv_to_file.clicked.connect(self.write_color_intervals_to_file)
+        # Solver
+        self.button_find_solution.clicked.connect(self.find_solution)
         # Cameras
         self.cap.frame_ready.connect(self.update_frame)
         self.cap.start()
         self.cap2.frame_ready.connect(self.update_frame_2)
         self.cap2.start()
+
 
     def display_all_points(self):
         self.set_all_coordinates()
@@ -356,7 +413,6 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.cap2.set_coordinates([])
         self.clear_table()
 
-
     def setup_cube_projection(self):
         for i in range(9):
             whiteLabel = self.grid_white.itemAt(i).widget()
@@ -386,6 +442,7 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
     def update_cube_projection(self, cube_list=None):
         if not cube_list:
             cube_list = ["wwwwwwwww", "ooooooooo", "ggggggggg", "rrrrrrrrr", "bbbbbbbbb", "yyyyyyyyy"]
+        self.cube_list = cube_list
         grids = [self.grid_white, self.grid_orange, self.grid_green, self.grid_red, self.grid_blue, self.grid_yellow]
         colors = {'w': "white", 'o': "orange", 'g': "green", 'r': "red", 'b': "blue", 'y': "yellow", 'u': "black"}
         for face, grid in zip(cube_list, grids):
@@ -443,46 +500,6 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         # !!!!! important, otherwise we enter an infinite loop (2/2)
         self.tableWidget.itemChanged.connect(self.update_coordinates_from_table_update)
 
-    # def set_color_to_component(self, component, color):
-    #     component.setPixmap(self.colors[color])
-    #
-    # def update_camera(self):
-    #     ret, frame = self.cap.read()
-    #     if ret:
-    #         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    #         image = QImage(frame.data, frame.shape[1], frame.shape[0], QImage.Format_RGB888)
-    #         pixmap = QPixmap.fromImage(image)
-    #         for face, points_lst in self.points_controller.points_dict.items():
-    #             for point in points_lst:
-    #                 pixmap = self.addPoint(pixmap, point.x, point.y)
-    #         self.main_cam.setPixmap(pixmap)
-    #
-    # def mousePressEventAddPoint(self, event):
-    #     if event.button() == Qt.LeftButton:
-    #         position = event.pos()
-    #         position.setX(int(position.x() / self.aspect_ratio))
-    #         position.setY(int(position.y() * self.aspect_ratio))
-    #
-    #         print(position, position / self.aspect_ratio)
-    #         self.points.append(position)
-    #         self.update_camera()
-    #
-    # def addPoint(self, pixmap, x, y):
-    #     painter = QPainter(pixmap)
-    #     painter.setRenderHint(QPainter.Antialiasing)
-    #
-    #     point_size = 3
-    #     point_color = Qt.red
-    #
-    #     pen = QPen(point_color)
-    #     pen.setWidth(point_size)
-    #     painter.setPen(pen)
-    #
-    #     painter.drawPoint(x, y)
-    #     painter.end()
-    #
-    #     return pixmap
-
     def identify_color(self, hsv):
         for color, (lower, upper) in self.color_ranges.items():
             if np.alltrue(np.greater_equal(hsv, lower)) and np.alltrue(np.less_equal(hsv, upper)):
@@ -539,3 +556,20 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         print(colors_list)
         self.update_cube_projection(colors_list)
         self.update_table_values()
+
+    def find_solution(self):
+        ##################
+        # REMOVE THIS
+        ##################
+        # self.solver.cube.apply_alg_std("F' D' U B F2 L U' R B F2 R2 D2 F U L' R' F2 D U B' R B2 R' F R2 F' L2 D2 B R2")
+        self.solver.update_cube_dict_from_colors_list(self.cube_list)
+        self.solution_thread = SolverThread(self.solver)
+        self.solution_thread.solution_found.connect(self.update_solution)
+        self.loading_window.show()
+        self.solution_thread.start()
+
+    def update_solution(self, solution_formatted, solution_std, solution_tuples):
+        self.solution_std = solution_std
+        self.solution_tuple = solution_tuples
+        self.plainText_cfop.setPlainText(solution_formatted)
+        self.loading_window.close()
