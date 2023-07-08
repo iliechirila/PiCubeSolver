@@ -36,14 +36,26 @@ class PLLSolver(BaseSolver):
                 self.top_cubies = self._top_cubies(cpy_cube_dict)
                 # ugh multiple for-ladders. It is what it is
                 alg = self._check_algs_rotation(pll_algs)
+                pll_skip = True
+                for coord, colors in self.solved_cube.items():
+                    if cpy_cube_dict[coord] != colors:
+                        pll_skip = False
+                        break
+
                 # print(f"PLL Cube dict found? {cpy_cube_dict}")
                 # print(alg)
-                if alg:
+                if alg or pll_skip:
                     print(j)
                     print(3-i)
-                    self.pll_alg = self.turns_needed[j] + alg + " " + self.turns_needed[i].rstrip(' ')
+                    if pll_skip:
+                        self.pll_alg = self.turns_needed[j]
+                        self.pll_alg = self.pll_alg[:-1]
+                    else:
+                        self.pll_alg = self.turns_needed[j] + alg + " " + self.turns_needed[i].rstrip(' ')
+                    # if self.pll_alg[-1] == ' ':
+                    #     self.pll_alg = self.pll_alg[:-1]
                     break
-            if alg:
+            if alg or pll_skip:
                 break
 
     def _check_algs_rotation(self, pll_algs):

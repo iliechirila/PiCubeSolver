@@ -17,7 +17,7 @@ class OLLSolver(BaseSolver):
             self.check_top_color = self._check_top_color()
             self.oll_alg = self._find_oll_alg()
             if self.oll_alg:
-                # print("Found him")
+                print("Found him")
                 print(f"OLL Index is {i}")
                 self.oll_alg = self.turns_needed[i] + self.oll_alg
                 break
@@ -27,6 +27,7 @@ class OLLSolver(BaseSolver):
         for name, perm_alg in oll_algs.items():
             # print(perm_alg[1])
             perm, alg = perm_alg
+
             found = True
             for coord, yellow_pattern in perm.items():
                 if self.check_top_color[coord] != yellow_pattern:

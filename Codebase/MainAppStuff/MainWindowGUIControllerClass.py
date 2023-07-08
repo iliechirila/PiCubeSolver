@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import QApplication, QTableWidgetItem, QLabel, QDialog, QVB
 from Codebase.Camera_Detection.PointsController import PointsController
 from Codebase.Common.Cube import Cube
 from Codebase.GUI.GeneratedDesign.mainWindow import *
-# from Codebase.Motors.MotorsController import MotorsController
+from Codebase.Motors.MotorsController import MotorsController
 from Codebase.Solvers.Solver import Solver
 
 MIN = 0
@@ -138,7 +138,7 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.solution_tuple = []
         self.rpm = 30
         self.slider_rpm.setValue(30)
-        # self.motors_controller = MotorsController()
+        self.motors_controller = MotorsController()
         self.center_colors = ['w', 'o', 'g', 'r', 'b', 'y']
         self.current_table_face = None
         self.aspect_ratio = 1280 / 720
@@ -153,12 +153,17 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.rpm = int(self.slider_rpm.value())
         self.label_rpm.setText(str(self.rpm))
 
-    # def setup_motors_pins(self):
-    #     self.motors_controller.add_pins_configuration("U",1,1,1)
-    #
-    # def solve_with_motor(self):
-    #     self.motors_controller.solve_cube(self.solution_tuple, self.rpm)
-    #
+    def setup_motors_pins(self):
+        self.motors_controller.add_pins_configuration("U",1,1,1)
+        self.motors_controller.add_pins_configuration("D",18,15,14)
+        self.motors_controller.add_pins_configuration("F",22,27,17)
+        self.motors_controller.add_pins_configuration("B",11,9,10)
+        self.motors_controller.add_pins_configuration("L",7,8,25)
+        self.motors_controller.add_pins_configuration("R",21,20,16)
+
+    def solve_with_motor(self):
+        self.motors_controller.solve_cube(self.solution_tuple, self.rpm)
+
     @pyqtSlot(QImage)
     def update_frame(self, q_image):
         pixmap = QPixmap.fromImage(q_image)
@@ -188,6 +193,9 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
     def connect_events(self):
         #rpm
         self.slider_rpm.valueChanged.connect(self.change_rpm)
+        #solve
+        self.button_solve_motors.clicked.connect(self.solve_with_motor)
+
 
         self.label_warning_faces.setText("Invalid centers configuration!")
         self.label_warning_faces.setFont(QFont("Arial", 12, QFont.Bold))
@@ -561,8 +569,9 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         ##################
         # REMOVE THIS
         ##################
-        # self.solver.cube.apply_alg_std("F' D' U B F2 L U' R B F2 R2 D2 F U L' R' F2 D U B' R B2 R' F R2 F' L2 D2 B R2")
-        self.solver.update_cube_dict_from_colors_list(self.cube_list)
+        self.solver.cube.apply_alg_std("F' D' U B F2 L U' R B F2 R2 D2 F U L' R' F2 D U B' R B2 R' F R2 F' L2 D2 B R2")
+        self.update_cube_projection(["orwowogob", "ywyyobrro", "rgorgwgbw", "wbobrwryb","ggbgbgrry","yygwyobyw"])
+        # self.solver.update_cube_dict_from_colors_list(self.cube_list)
         self.solution_thread = SolverThread(self.solver)
         self.solution_thread.solution_found.connect(self.update_solution)
         self.loading_window.show()
