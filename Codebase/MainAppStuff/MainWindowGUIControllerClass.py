@@ -1,4 +1,5 @@
 import json
+import os
 import time
 
 import cv2
@@ -8,11 +9,11 @@ from PyQt5.QtCore import QTimer, Qt, QThread, pyqtSignal, pyqtSlot, QSize, QMute
 from PyQt5.QtGui import QColor, QImage, QPixmap, QPainter, QPen, QFont
 from PyQt5.QtWidgets import QApplication, QTableWidgetItem, QLabel, QDialog, QVBoxLayout
 
-from Codebase.Camera_Detection.PointsController import PointsController
-from Codebase.Common.Cube import Cube
-from Codebase.GUI.GeneratedDesign.mainWindow import *
-from Codebase.Motors.MotorsController import MotorsController
-from Codebase.Solvers.Solver import Solver
+from Camera_Detection.PointsController import PointsController
+from Common.Cube import Cube
+from GUI.GeneratedDesign.mainWindow import *
+from Motors.MotorsController import MotorsController
+from Solvers.Solver import Solver
 
 MIN = 0
 MAX = 1
@@ -29,6 +30,7 @@ class CameraThread(QThread):
         super(CameraThread, self).__init__()
         self.name = name
         self.video = cv2.VideoCapture(index)
+        self.video.set(cv2.CAP_PROP_FPS, 5)
         self.coordinates = coordinates
         self.mutex = QMutex()
         self.apply_filter = False
@@ -130,7 +132,7 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.main_cam.setFixedSize(QSize(310, 245))
         self.main_cam_2.setFixedSize(QSize(310, 245))
         self.cap = CameraThread("Cam1", 0, [])
-        self.cap2 = CameraThread("Cam2", 1, [])
+        self.cap2 = CameraThread("Cam2", 2, [])
         self.solver = Solver()
         self.loading_window = LoadingWindow()
         self.cube_list = []
@@ -138,7 +140,9 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.solution_tuple = []
         self.rpm = 30
         self.slider_rpm.setValue(30)
+        self.change_rpm()
         self.motors_controller = MotorsController()
+        self.setup_motors_pins()
         self.center_colors = ['w', 'o', 'g', 'r', 'b', 'y']
         self.current_table_face = None
         self.aspect_ratio = 1280 / 720
@@ -154,12 +158,12 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label_rpm.setText(str(self.rpm))
 
     def setup_motors_pins(self):
-        self.motors_controller.add_pins_configuration("U",1,1,1)
-        self.motors_controller.add_pins_configuration("D",18,15,14)
-        self.motors_controller.add_pins_configuration("F",22,27,17)
-        self.motors_controller.add_pins_configuration("B",11,9,10)
-        self.motors_controller.add_pins_configuration("L",7,8,25)
-        self.motors_controller.add_pins_configuration("R",21,20,16)
+        self.motors_controller.add_pins_configuration('U',3,2,4)
+        self.motors_controller.add_pins_configuration('D',18,15,14)
+        self.motors_controller.add_pins_configuration('F',22,27,17)
+        self.motors_controller.add_pins_configuration('B',11,9,10)
+        self.motors_controller.add_pins_configuration('L',7,8,25)
+        self.motors_controller.add_pins_configuration('R',21,20,16)
 
     def solve_with_motor(self):
         self.motors_controller.solve_cube(self.solution_tuple, self.rpm)
@@ -183,11 +187,11 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
             self.main_cam_debug_4.setPixmap(pixmap)
 
     def load_color_intervals(self):
-        with open("./Common/color_intervals.json", 'r') as json_file:
+        with open(os.path.join(os.getcwd(),"Codebase/Common/color_intervals.json"), 'r') as json_file:
             self.color_ranges = json.load(json_file)
 
     def write_color_intervals_to_file(self):
-        with open("./Common/color_intervals.json", 'w') as json_file:
+        with open(os.path.join(os.getcwd(),"Codebase/Common/color_intervals.json"), 'w') as json_file:
             json.dump(self.color_ranges, json_file)
 
     def connect_events(self):
@@ -569,9 +573,9 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         ##################
         # REMOVE THIS
         ##################
-        self.solver.cube.apply_alg_std("F' D' U B F2 L U' R B F2 R2 D2 F U L' R' F2 D U B' R B2 R' F R2 F' L2 D2 B R2")
-        self.update_cube_projection(["orwowogob", "ywyyobrro", "rgorgwgbw", "wbobrwryb","ggbgbgrry","yygwyobyw"])
-        # self.solver.update_cube_dict_from_colors_list(self.cube_list)
+        # self.solver.cube.apply_alg_std("F' D' U B F2 L U' R B F2 R2 D2 F U L' R' F2 D U B' R B2 R' F R2 F' L2 D2 B R2")
+        # self.update_cube_projection(["orwowogob", "ywyyobrro", "rgorgwgbw", "wbobrwryb","ggbgbgrry","yygwyobyw"])
+        self.solver.update_cube_dict_from_colors_list(self.cube_list)
         self.solution_thread = SolverThread(self.solver)
         self.solution_thread.solution_found.connect(self.update_solution)
         self.loading_window.show()

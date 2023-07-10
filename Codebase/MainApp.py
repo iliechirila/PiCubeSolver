@@ -47,7 +47,7 @@ if __name__ == '__main__':
     # [('U', 'dt'), ('R', 'ccw'), ('U', 'cw'), ('R', 'ccw'), ('F', 'cw'), ('R', 'cw'), ('F', 'ccw'), ('R', 'cw')]]
     # for alg in f2l_algs:
     #     cube.apply_alg_tuple(alg)
-    cube.graph_cube()
+    # cube.graph_cube()
 
 
     # cube.graph_cube()
@@ -57,14 +57,14 @@ if __name__ == '__main__':
     if oll.oll_alg:
         print(oll.oll_alg)
         cube.apply_alg_std(oll.oll_alg)
-    cube.graph_cube()
+    # cube.graph_cube()
 
     pll = PLLSolver(cube.cube_dict)
     print("PLL Alg:")
     if pll.pll_alg:
         print(pll.pll_alg)
         cube.apply_alg_std(pll.pll_alg)
-    cube.graph_cube()
+    # cube.graph_cube()
     print(cube.cube_dict)
 
 """

@@ -1,9 +1,9 @@
 from collections import deque
 from copy import copy
 
-from Codebase.Common.Cube import Cube, general_turn
-from Codebase.Common.Turns import Y, X, Z, TURN_MAPPING_DICT, OPPOSITE_COLORS, CW, CCW, DT, TURN_SPACE
-from Codebase.Solvers.BaseSolver import BaseSolver
+from Common.Cube import Cube, general_turn
+from Common.Turns import Y, X, Z, TURN_MAPPING_DICT, OPPOSITE_COLORS, CW, CCW, DT, TURN_SPACE
+from Solvers.BaseSolver import BaseSolver
 
 
 def choose_valid_turns(turn_space: list, last_turn: tuple):

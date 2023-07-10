@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets
 from pyqtgraph import mkQApp
-from Codebase.MainAppStuff.MainWindowGUIControllerClass import MainWindowGUIControllerClass
+from MainAppStuff.MainWindowGUIControllerClass import MainWindowGUIControllerClass
 
 try:
     app = mkQApp("CubeSolver")

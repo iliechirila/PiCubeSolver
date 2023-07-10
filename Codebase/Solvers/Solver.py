@@ -1,8 +1,8 @@
-from Codebase.Common.Cube import Cube
-from Codebase.Solvers.CrossSolver import CrossSolver
-from Codebase.Solvers.F2LSolver import F2LSolver
-from Codebase.Solvers.OLLSolver import OLLSolver
-from Codebase.Solvers.PLLSolver import PLLSolver
+from Common.Cube import Cube
+from Solvers.CrossSolver import CrossSolver
+from Solvers.F2LSolver import F2LSolver
+from Solvers.OLLSolver import OLLSolver
+from Solvers.PLLSolver import PLLSolver
 
 class Solver:
     def __init__(self):

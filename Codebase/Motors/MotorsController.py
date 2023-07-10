@@ -7,6 +7,7 @@ DIR_INDEX = 0
 
 class MotorsController:
     def __init__(self):
+        GPIO.setmode(GPIO.BCM)
         self.pins_config = dict()
         self.rot_steps = {"cw": 50, "ccw": 50, "dt": 100}
 
@@ -18,6 +19,7 @@ class MotorsController:
         GPIO.output(enable_pin, GPIO.HIGH)
         GPIO.output(dir_pin, GPIO.LOW)
         self.pins_config.update({motor_name: [dir_pin, step_pin, enable_pin]})
+        print(self.pins_config)
 
     def command_stepper(self, move, RPM):
         face, rot_type = move
@@ -26,7 +28,7 @@ class MotorsController:
         ENABLE = self.pins_config[face][ENABLE_INDEX]
         DIR = self.pins_config[face][DIR_INDEX]
         STEP = self.pins_config[face][STEP_INDEX]
-        rotation_pol = GPIO.LOW
+        rotation_pol = GPIO.HIGH
         if rot_type == "cw":
             rotation_pol = GPIO.LOW
         elif rot_type == "ccw":
@@ -40,7 +42,9 @@ class MotorsController:
             time.sleep(delay)
             GPIO.output(STEP, GPIO.LOW)
             time.sleep(delay)
+            
         GPIO.output(ENABLE, GPIO.HIGH)
+        # time.sleep(0.1)
 
     def solve_cube(self, solution_tuples: list, rpm: int):
         for move in solution_tuples:

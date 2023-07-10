@@ -1,7 +1,7 @@
-from Codebase.Common.Cube import general_turn
-from Codebase.Common.PLL_algs import pll_algs_dict
-from Codebase.Common.Turns import Y, U, CW, DT, CCW
-from Codebase.Solvers.BaseSolver import BaseSolver
+from Common.Cube import general_turn
+from Common.PLL_algs import pll_algs_dict
+from Common.Turns import Y, U, CW, DT, CCW
+from Solvers.BaseSolver import BaseSolver
 
 
 class PLLSolver(BaseSolver):

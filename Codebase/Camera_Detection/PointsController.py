@@ -13,7 +13,7 @@ class PointsController:
         self.points_dict = self.initiate_points()
 
     def initiate_points(self):
-        with open('./Common/positions.json') as file:
+        with open('Codebase/Common/positions.json') as file:
             data = json.load(file)
             basic_color = "Unknown"
             points_dict = dict()
@@ -34,7 +34,7 @@ class PointsController:
 
     def update_file(self):
         print("Updating points.json ...")
-        with open('./Common/positions.json', 'w') as file:
+        with open('Codebase/Common/positions.json', 'w') as file:
             file.seek(0)
             data = dict()
             for face, points in self.points_dict.items():

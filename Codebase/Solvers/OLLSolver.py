@@ -1,7 +1,7 @@
-from Codebase.Common.Cube import general_turn
-from Codebase.Common.OLL_algs import oll_algs
-from Codebase.Common.Turns import Y, CW, U, DT, CCW
-from Codebase.Solvers.BaseSolver import BaseSolver
+from Common.Cube import general_turn
+from Common.OLL_algs import oll_algs
+from Common.Turns import Y, CW, U, DT, CCW
+from Solvers.BaseSolver import BaseSolver
 
 
 class OLLSolver(BaseSolver):

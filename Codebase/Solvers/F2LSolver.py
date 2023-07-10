@@ -3,11 +3,11 @@ from collections import deque
 from copy import copy
 from operator import add
 
-from Codebase.Common.Cube import general_turn, Cube
-from Codebase.Common.Turns import U, D, R, L, F, B, CW, CCW, DT, TURN_SPACE, ORIENTATION, TURN_MAPPING_DICT, X, \
+from Common.Cube import general_turn, Cube
+from Common.Turns import U, D, R, L, F, B, CW, CCW, DT, TURN_SPACE, ORIENTATION, TURN_MAPPING_DICT, X, \
     TARGET_AXIS, TARGET_REORIENTATION, Y, Z
-from Codebase.Solvers.BaseSolver import BaseSolver
-from Codebase.Solvers.CrossSolver import generate_turn_space, choose_valid_turns
+from Solvers.BaseSolver import BaseSolver
+from Solvers.CrossSolver import generate_turn_space, choose_valid_turns
 
 
 class F2LSolver(BaseSolver):
@@ -129,7 +129,7 @@ class F2LSolver(BaseSolver):
             # Create new objects and put in open_set to
             # check next if perm hasn't already been found
             for turn in turn_space_current:
-                self.index += 1
+                # self.index += 1
                 # print(self.index, current.abs_h_cost, current.did_slot_turn, current.alg)
                 new_perm = current.apply_turn(turn)
                 # new_perm = {cubie_key(color): (list(coord), color)

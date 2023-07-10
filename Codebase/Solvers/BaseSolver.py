@@ -1,6 +1,6 @@
 import abc
 
-from Codebase.Common.Cube import Cube
+from Common.Cube import Cube
 
 
 class BaseSolver:
