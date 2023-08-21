@@ -126,6 +126,7 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent=parent)
         self.setupUi(self)
+        self.showMaximized()
         self.frame_top_bar.hide()
         self.load_color_intervals()
         self.setup_cube_projection()
@@ -138,8 +139,9 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.cube_list = []
         self.solution_std = ''
         self.solution_tuple = []
-        self.rpm = 30
-        self.slider_rpm.setValue(30)
+        self.rpm = 100
+        self.slider_rpm.setMaximum(140)
+        self.slider_rpm.setValue(100)
         self.change_rpm()
         self.motors_controller = MotorsController()
         self.setup_motors_pins()
@@ -211,27 +213,27 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         self.button_debug_page.clicked.connect(lambda: self.stackedWidget_content.setCurrentIndex(DEBUG_PAGE))
 
         # heh nice sizing hack
-        size = QSize(20, 20)
-        self.o4.setFixedSize(size)
-        self.o5.setFixedSize(size)
-        self.o6.setFixedSize(size)
-        self.g4.setFixedSize(size)
-        self.g5.setFixedSize(size)
-        self.g6.setFixedSize(size)
-        self.r4.setFixedSize(size)
-        self.r5.setFixedSize(size)
-        self.r6.setFixedSize(size)
-        self.b4.setFixedSize(size)
-        self.b5.setFixedSize(size)
-        self.b6.setFixedSize(size)
-        self.w2.setFixedSize(size)
-        self.w5.setFixedSize(size)
-        self.w8.setFixedSize(size)
-        self.g2.setFixedSize(size)
-        self.g8.setFixedSize(size)
-        self.y2.setFixedSize(size)
-        self.y5.setFixedSize(size)
-        self.y8.setFixedSize(size)
+        # size = QSize(20, 20)
+        # self.o4.setFixedSize(size)
+        # self.o5.setFixedSize(size)
+        # self.o6.setFixedSize(size)
+        # self.g4.setFixedSize(size)
+        # self.g5.setFixedSize(size)
+        # self.g6.setFixedSize(size)
+        # self.r4.setFixedSize(size)
+        # self.r5.setFixedSize(size)
+        # self.r6.setFixedSize(size)
+        # self.b4.setFixedSize(size)
+        # self.b5.setFixedSize(size)
+        # self.b6.setFixedSize(size)
+        # self.w2.setFixedSize(size)
+        # self.w5.setFixedSize(size)
+        # self.w8.setFixedSize(size)
+        # self.g2.setFixedSize(size)
+        # self.g8.setFixedSize(size)
+        # self.y2.setFixedSize(size)
+        # self.y5.setFixedSize(size)
+        # self.y8.setFixedSize(size)
         # Centers detection & Table stuff
         self.checkBox_detect_centers.stateChanged.connect(self.toggle_centers_detection)
         self.comboBox_up_color.currentIndexChanged.connect(self.check_centers_detection)
@@ -387,15 +389,23 @@ class MainWindowGUIControllerClass(QtWidgets.QMainWindow, Ui_MainWindow):
         ]
 
     def update_coordinates_from_table_update(self, item):
-        if item.column() == 2 or item.column() == 3:
+        if item.column() == 2 or item.column() == 3 or item.column() == 4:
             face = self.tableWidget.item(item.row(), 0).text()
             index = int(self.tableWidget.item(item.row(), 1).text())
             x = int(self.tableWidget.item(item.row(), 2).text())
             y = int(self.tableWidget.item(item.row(), 3).text())
-            color = self.tableWidget.item(item.row(), 4).text()
+            color = str(self.tableWidget.item(item.row(), 4).text())
             print(face, index, x, y, color)
         self.points_controller.update_point(face, index, x, y, color)
         self.set_coordinates(face)
+        if self.cube_list:
+            faces_list = ["Up", "Left", "Front", "Right", "Back", "Down"]
+            face_index = faces_list.index(face)
+            color_string = self.cube_list[face_index]
+            color_string = color_string[:index] + color[0] + color_string[index+1:]
+            self.cube_list[face_index] = color_string
+            self.update_cube_projection(self.cube_list)
+
 
     def set_coordinates(self, face):
         coordinates = self.points_controller.points_dict[face]

@@ -22,9 +22,15 @@ class Solver:
         alg_pll = self.solve_pll()
 
         # CORNER CASES WHEN THERE IS AN OLL SKIP
-        alg_oll = self.cube.format_alg_to_turns(alg_oll)
-        alg_pll = self.cube.format_alg_to_turns(alg_pll)
+        if alg_oll:
+            alg_oll = self.cube.format_alg_to_turns(alg_oll)
+        else:
+            alg_oll = []
 
+        if alg_pll:
+            alg_pll = self.cube.format_alg_to_turns(alg_pll)
+        else:
+            alg_pll = []
         #######################
         # DEBUGGING
         #######################

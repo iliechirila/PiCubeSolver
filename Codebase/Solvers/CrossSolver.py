@@ -22,7 +22,7 @@ def choose_valid_turns(turn_space: list, last_turn: tuple):
     #         print(f"REMOVED {turn}")
     # print(f"FINAL   TURN SPACE: {valid_turns}")
 
-    return turn_space
+    return valid_turns
 
 
 def generate_turn_space():

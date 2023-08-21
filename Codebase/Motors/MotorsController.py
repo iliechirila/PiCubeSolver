@@ -37,7 +37,7 @@ class MotorsController:
         GPIO.output(ENABLE, GPIO.LOW)
         GPIO.output(DIR, rotation_pol)
         for i in range(self.rot_steps[rot_type]):
-            print(f"Step {i}")
+            # print(f"Step {i}")
             GPIO.output(STEP, GPIO.HIGH)
             time.sleep(delay)
             GPIO.output(STEP, GPIO.LOW)
